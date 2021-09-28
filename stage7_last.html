@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>ぼうけんゲーム</title>
+	<link rel="stylesheet" href="style.css">
+	<link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+	<!-- ビューポートの設定 -->
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<style>
+	div{
+	 margin-top: 2%;
+	}
+	#stage{
+		text-align: center;
+		background-color: rgba(255, 255, 255, 0.3);
+	}
+</style>
+
+<body>
+
+	</head>
+
+	<body>
+
+		<p id="stage">ステージ 7　アイテムをゲットしよう！</p>
+		<form action="#" name="form1">
+			</form>
+
+		
+
+		<!-- 各ボタン作成 -->
+		<div><canvas id="canvas"></canvas></div>
+
+		<div>
+			<button type="button" id="right"><img src="img/command/right.png" id="右"></button>
+			<button type="button" id="left"><img src="img/command/left.png" id="左"></button>
+			<button type="button" id="up"><img src="img/command/up.png" id="上"></button>
+			<button type="button" id="down"><img src="img/command/down.png" id="下"></button>
+			<button type="button" id="act"><img src="img/command/action.png"></button>
+			<button type="button" id="again"><img src="img/command/restart.png"></button>
+			<button type="button" id="attack"><img src="img/command/attack.png"></button>
+			<button type="button" id="attack2"><img src="img/command/attack2.png"></button>
+		</div>
+		<script>
+			// シロクマくんのうごくかずカウント
+			var count = 0;
+
+			var line = [];
+			var image = { "右":"<img src='img/command/right.png' width=3%>", 
+						"左":"<img src='img/command/left.png' width=3%>", 
+						"上":"<img src='img/command/up.png' width=3%>",
+						"下":"<img src='img/command/down.png' width=3%>",
+                        "攻撃":"<img src='img/command/attack.png' width=3%>",
+                        "攻撃2":"<img src='img/command/attack2.png' width=3%>"}
+
+			// 各ボタンがクリックさせた時の処理
+			document.getElementById("right").onclick = function () {
+				count++;
+				document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
+				line.push("右"); //配列に格納
+				console.log(line);
+				document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+				rewrite();
+			};
+			document.getElementById("left").onclick = function () {
+				count++;
+				document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
+				line.push("左");
+				console.log(line);
+				document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+				rewrite();
+			};
+			document.getElementById("up").onclick = function () {
+				count++;
+				document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
+				line.push("上");
+				console.log(line);
+				document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+				rewrite();
+			};
+			document.getElementById("down").onclick = function () {
+				count++;
+				document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
+				line.push("下");
+				console.log(line);
+				document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+				rewrite();
+			};
+			document.getElementById("attack").onclick = function () {
+				//最短シロクマくんのうごくかずが変わっちゃうからcountプラスしない
+				document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
+				line.push("攻撃");
+				console.log(line);
+				document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+				rewrite();
+			};
+			document.getElementById("attack2").onclick = function () {
+				//最短シロクマくんのうごくかずが変わっちゃうからcountプラスしない
+				document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
+				line.push("攻撃2");
+				console.log(line);
+				document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+				rewrite();
+			};
+
+			//配列削除（初期化）やり直すボタンクリック時の処理
+			document.getElementById("again").onclick = function () {
+				//移動ボタン表示
+				document.getElementById("right").hidden = false;
+				document.getElementById("left").hidden = false;
+				document.getElementById("up").hidden = false;
+				document.getElementById("down").hidden = false;
+				document.getElementById("act").hidden = false;
+				document.getElementById("attack").hidden = false;
+				document.getElementById("attack2").hidden = false;
+				count = 0; //カウント初期化
+				document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
+				line.length = 0; //配列を空に
+				console.log(line);
+				document.getElementById("move").innerHTML = "シロクマくんのうごき："
+				player.move = 0;
+				get_enemy();//敵の再配置
+				// プレイヤーをスタート位置へ
+				player.x = 48;
+				player.y = 48;
+			};
+			
+
+			//移動方向表示p1書き換え
+			function rewrite() {
+				if (line.length > 1) {
+					for (let j = 1; j < line.length; j++) {
+						// document.getElementById("move").innerHTML += "→" + line[j];
+						var url=image[line[j]];
+						document.getElementById("move").innerHTML += url;
+						// document.write("<img src='" + image["line[j]"] +"'>");
+					}
+				}
+			}
+
+
+		</script>
+
+		<!-- 表示 -->
+<p1 id=move>シロクマくんのうごき：</p1><br>
+<p2 id=count>シロクマくんのうごくかず：０</p2>
+
+		<script type="text/javascript" src="js/findShortestPath.js"></script>
+		<script type="text/javascript" src="js/scriptstage7_last.js"></script>
+
+	</body>
+
+</html>
