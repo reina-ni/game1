@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	
+<head>
+	<meta charset="UTF-8">
+	<title>ぼうけんゲーム</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+	<!-- ビューポートの設定 -->
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<style>
+	div{
+		text-align: center;
+		background-color: none;
+	}
+  img{
+    text-align: center;
+    padding-top: 5%;
+    background-color: none;
+  }
+  .fluffy {
+    background: none;
+    animation: fluffy1 3s ease infinite;
+}
+  @keyframes fluffy1 {
+    0% { transform:translateY(0) }
+    5% { transform:translateY(0) }
+    10% { transform:translateY(0) }
+    20% { transform:translateY(-15px) }
+    25% { transform:translateY(0) }
+    30% { transform:translateY(-15px) }
+    50% { transform:translateY(0) }
+    100% { transform:translateY(0) }
+}
+</style>
+
+<body>
+  <body>
+    <div id="awan">
+      <img src="img/title.png" width="400" height="170"><br>
+      <button id=btn>あそびかた</button>
+           <button id=album>ずかん</button>
+    </div>
+    <div class="fluffy">
+      <a href="stage1.html"><img src="img/player.png"></a></div>
+  
+  <script>
+      document.getElementById("btn").onclick = function () {
+        window.location.href = "gamerule.html";
+      };
+      document.getElementById("album").onclick = function () {
+        window.location.href = "album.html";
+      };
+  </script>
+  </body>
+</html>
