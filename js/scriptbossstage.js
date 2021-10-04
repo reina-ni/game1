@@ -12,6 +12,13 @@ player.img.src = 'img/player.png';
 player.x = 48;
 player.y = 48;
 player.move = 0;
+
+//ドラゴンをゴールに配置
+var boss = new Object();
+boss.img = new Image();
+boss.img.src = 'img/boss.png';
+boss.x = 11*48;
+boss.y = 240;
  
 //マップチップのImageオブジェクト作成
 var mapchip = new Image();
@@ -164,6 +171,7 @@ function main(i) {
  
 	//プレイヤー画像表示
 	ctx.drawImage(player.img, player.x, player.y);
+	ctx.drawImage(boss.img, boss.x, boss.y);
 
 
 	window.onload = function() {
