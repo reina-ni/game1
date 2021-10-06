@@ -44,7 +44,7 @@
         <div class="float">
             <div class="flex">
                 <p id="clearcountshortest"></p>
-                <img src="img/playerclear01.png" height="100">
+                <img src="img/playerclear03.png" height="100">
                 <p id="clearcount">いどうかいすう：</p>
             </div>
         </div>
@@ -60,10 +60,11 @@
         var clearcountshortest = window.localStorage.getItem("clearcountshortest");
         console.log("最短移動回数："+clearcountshortest);
        
-        if (clearcount == clearcountshortest) {
-            document.getElementById("clearcountshortest").innerHTML = "さいたんいどうでクリア！";
-            console.log('最短移動でクリア');//確認
-        }
+        //最短移動関係ないためコメントアウト
+        // if (clearcount == clearcountshortest) {
+        //     document.getElementById("clearcountshortest").innerHTML = "さいたんいどうでクリア！";
+        //     console.log('最短移動でクリア');//確認
+        // }
 
         var filename = window.localStorage.getItem("filename");//次のhtml受け取り（前頁のコードに記載）
         console.log("次ステージ："+filename);

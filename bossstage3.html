@@ -88,45 +88,14 @@
 #increase-btn:active,#decrease-btn:active {
     transform: translate(2px,2px);
     box-shadow: none;
-	} */
-	.flash-title {
-		position: fixed;
-		top: 0;
-		left: 0;
-		display: table;
-		width: 100%;
-		height: 100%;
-		-webkit-animation: fade-in-out 5s ease 1s forwards;
-		animation: fade-in-out 5s ease 1s forwards;
-		visibility: hidden;
-		z-index: 1;
-	}
-	/*文字変更用：削除しない*/
-	/* .flash-title p {
-		display: table-cell;
-		vertical-align: middle;
-		text-align: center;
-		font-size: 90px;
-		color: #fff;
-	} */
-	@-webkit-keyframes fade-in-out {
-		0% {visibility: hidden; opacity: 0;}
-		50% {visibility: visible; opacity: 1;}
-		100% {visibility: hidden; opacity: 0;}
-	}
-
-	@keyframes fade-in-out {
-		0% {visibility: hidden; opacity: 0;}
-		50% {visibility: visible; opacity: 1;}
-		100% {visibility: hidden; opacity: 0;}
-	}
+    } */
 </style>
 
 <!-- bossalert -->
 <body>
-		<div class="flash-title">
+		<!-- <div class="flash-title">
 			<img src="img/boss_alert.png" width="100%">
-		  </div>
+		  </div> -->
     
 
 	</head>
@@ -330,7 +299,7 @@
 <p2 id=count>シロクマくんのうごくかず：０</p2>
 
 		<script type="text/javascript" src="js/findShortestPath.js"></script>
-		<script type="text/javascript" src="js/scriptbossstage.js"></script>
+		<script type="text/javascript" src="js/scriptbossstage3.js"></script>
 
 	</body>
 

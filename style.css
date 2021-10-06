@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap');
+
 body{
-  font-family: 'Yusei Magic', sans-serif;
+  font-family: 'Hachi Maru Pop';
   color: #fff;
 }
 button{
   background-color: transparent;
+  color: #fff;
   border: none;
   cursor: pointer;
   outline: none;
@@ -11,10 +14,10 @@ button{
   appearance: none;
 }
 div{
-text-align: center;
+  text-align: center;
 }
 
-* { background:#a5ccdf}
+*{ background:#a5ccdf} 
 #awan {
 position:absolute;
 top: 0px;left:0px;
