@@ -13,8 +13,6 @@ player.x = 48;
 player.y = 48;
 player.move = 0;
 
-var hp=100;
-
  
 //マップチップのImageオブジェクト作成
 var mapchip = new Image();
@@ -36,6 +34,14 @@ bb_enemy=[];
 aaa_enemy=[];
 bbb_enemy=[];
 
+//残hp受け取り
+// var hp;
+var d_hp = window.localStorage.getItem("d_hp");
+console.log(d_hp);
+
+//hpゲージ設定
+var meter = document.getElementById('meter');
+meter.setAttribute('value', d_hp);
 
 var ice_check=0;//０：アイス未完成
 
@@ -591,25 +597,27 @@ function main(i) {
 				console.log("アイス完成！");
 				ice_check=1;//１：アイス完成
 
-				//完成したアイスの攻撃力
+                //完成したアイスの攻撃力
+                var d_hp = window.localStorage.getItem("d_hp");
 				console.log("アイスの個数："+Q_ice.length);
 				if(Q_ice.length===1){
-					//hp=1;//-20
-					hp-=20;
+					d_hp-=20;
 				}else if(Q_ice.length===2){
-					//hp=2;//-25
-					hp-=25;
+					d_hp-=25;
 				}else{
-					//hp=3;//-35
-					hp-=35;
-				}
-
-
-
+					d_hp-=35;
+                }
+                
+                //hpがゼロになったらページ変わる
+                if(d_hp<=0){
+                    console.log("ドラゴンを倒した!");
+                    meter.setAttribute('value', 0);//hpゲージをゼロに
+                    window.location.href = "bossclear.html"; //画面遷移
+                }
 
 				//hp引継ぎ用
 				var d_hp;
-				window.localStorage.setItem("d_hp",hp);
+				window.localStorage.setItem("d_hp",d_hp);
 				stop();
 			}else{
 				console.log("未完成！");
@@ -650,7 +658,7 @@ function main(i) {
 			// console.log(datet);
 
 			window.setTimeout(function(){
-				window.location.href = "bossstage2.html"; //画面遷移
+				window.location.href = "bossstage5.html"; //画面遷移
 			}, 1000);
 			
 
