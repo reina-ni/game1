@@ -67,19 +67,15 @@
 	<div id ="site-box">
 		<p id="stage">ステージ 1</p>
 		<div class="flex">
-		<EMBED src="music/tousen.mp3" autostart="true" hidden="true">
-		<div class="audio_wrap">
-			<div class="audio_button">
-				<audio id="audio" src="music/natsuyasuminotanken.mp3" loop>
-					あなたのブラウザーは<code>audio</code>要素をサポートしていません。</audio>
-			</div>
-		</div>
-
+			<audio autoplay id="audio" loop>
+				<source src="music/SE.mp3">
+			  </audio>
+			<EMBED src="music/natsuyasuminotanken.mp3" autostart="true" hidden="true">
 		<label class="open" for="pop-up"><img src="img/command/gamerule.png" width="20px" height="20px"></label>
 			<input type="checkbox" id="pop-up">
 				<div class="overlay">
 					<div class="window">
-						<br><br><br>
+						<br><br><br><br>
 						<p>あそびかた</p>
 						<label class="close" for="pop-up">×</label>
 						<ul id="list">
@@ -87,10 +83,8 @@
 							<li class="item"><img src="img/command/right.png" width="20">　みぎに１マスすすむ</li>
 							<li class="item"><img src="img/command/del.png" width="20">　うごきをひとつけす</li>
 							<li class="item"><img src="img/command/restart.png" width="20">　うごきをぜんぶけす</li>
-							<li class="item"><img src="img/command/bgm.png" width="20">　おんがくをながす</li>
-							<li class="item"><img src="img/command/bgm_off.png" width="20">　おんがくをとめる</li>
 						</ul>
-						<br><br><br><br><br><br>
+						<br><br><br><br><br>
 						<span class="under">シロクマくんはまとめてしかうごけないよ！</span><br><br>
 					</div>
 				</div>
