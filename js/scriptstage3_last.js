@@ -1,31 +1,25 @@
-//canvasの設定
 var canvas = document.getElementById( 'canvas' );
 canvas.width = 528;
 canvas.height = 240;
 
 var ctx = canvas.getContext( '2d' );
- 
-//オブジェクト作成
+
 var player = new Object();
 player.img = new Image();
-player.img.src = 'img/player.png';
+player.img.src = 'img/player/player.png';
 player.x = 48;
 player.y = 48;
 player.move = 0;
 
-//レベル１バケツをゴールに配置
 var attack = new Object();
 attack.img = new Image();
 attack.img.src = 'img/command/attack.png';
 attack.x = 432;
 attack.y = 144;
- 
-//マップチップのImageオブジェクト作成
+
 var mapchip = new Image();
-// mapchip.src = '地面.png';
-mapchip.src = 'img/stage48-4.png';
- 
-//キーボードのオブジェクトを作成
+mapchip.src = 'img/stage/stage.png';
+
 var btn = new Object();
 btn.up = false;
 btn.down = false;
@@ -33,22 +27,6 @@ btn.right = false;
 btn.left = false;
 btn.push = '';
 
-//敵用配列
-// a_enemy=[];
-// b_enemy=[];
-
-//againボタンクリック時の敵再度配置
-// function get_enemy(){
-// 	for(var en=0;en<a_enemy.length;en++){
-// 		map[a_enemy[en]][b_enemy[en]] = 3;
-// 		ctx.clearRect(player.x,player.y,48,48);//一旦消す
-// 	}
-// 	console.log(a_enemy,b_enemy);
-// }
-
-
- 
-//マップの作成
 var map = [
 	[1, 1, 1, 1, 1, 1, 1, 1 ,1 ,1, 1 ],
 	[1, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 1 ],
@@ -58,11 +36,10 @@ var map = [
 ]
 
 map[1][1]=0;
-map[3][9]=2;//ゴール
+map[3][9]=2;
 
 for(var a=2;a<map.length-1;a+=2){
     for(var b=2;b<map[0].length-1;b+=2){
-		//左が1だったら
 		if(map[a][b-1]==1){
 			map[a+1][b]=Math.floor( Math.random() * 2 );
 			if(map[a+1][b]==0){
@@ -70,11 +47,9 @@ for(var a=2;a<map.length-1;a+=2){
 				if(map[a+1][b]==0 && map[a][b+1]==0){
 					map[a][b-1]=1;
 				}
-			}
-			
-		}else{//左が0だったら
-		// console.log(map[a][b]);
-		map[a-1][b]=Math.floor( Math.random() * 2 );//0or1
+			}	
+		}else{
+		map[a-1][b]=Math.floor( Math.random() * 2 );
 		
 			if(map[a-1][b]==0){
 				map[a][b-1]=Math.floor( Math.random() * 2 );
@@ -89,27 +64,19 @@ for(var a=2;a<map.length-1;a+=2){
     }
 }
 
-
-//findShortestPath.jsで使う変数
 var h = map.length;
 var w = map[0].length;
 var h_goal = 3;
 var w_goal = 9;
 
-//最短距離探索
 var pathresult = pathfinding();
 
-//最短距離回数shortest_count
 var shortest_count = pathresult.length;
 console.log("最短距離探索結果："+shortest_count);
 
-
- 
-//メインループ
 function main(i) {
 	for (var y=0; y<map.length; y++) {
 		for (var x=0; x<map[y].length; x++) {
-			//0が道・2がゴール
 			if ( map[y][x] === 0 ) ctx.drawImage( mapchip, 0, 0, 48, 48, 48*x, 48*y, 48, 48 );
 			if ( map[y][x] === 1 ) ctx.drawImage( mapchip, 48, 0, 48, 48, 48*x, 48*y, 48, 48 );
 			if ( map[y][x] === 2 ) ctx.drawImage( mapchip, 96, 0, 48, 48, 48*x, 48*y, 48, 48 );
@@ -118,33 +85,10 @@ function main(i) {
 			if ( map[y][x] === 5 ) ctx.drawImage( mapchip, 240, 0, 48, 48, 48*x, 48*y, 48, 48 );
 		}
 	}
- 
-	//プレイヤー画像表示
+
     ctx.drawImage(player.img, player.x, player.y);
     ctx.drawImage(attack.img, attack.x, attack.y);
 
-	//敵の表示
-	// window.onload = function() {
-	// 	//上書きされないように一度だけ実行（敵の位置）
-	// 	for(var n=0;n< 5 ;n++){//最大敵数
-	// 		a=1+Math.floor( Math.random() * h_goal );
-	// 		b=1+Math.floor( Math.random() * w_goal );
-	// 		if(map[a][b] === 0){
-	// 			map[a][b] = 3;
-	// 			if(a==1 && b==1){
-	// 				map[1][1] = 0;
-	// 			}else{
-	// 			a_enemy.push(a);
-	// 			b_enemy.push(b);
-	// 			}
-	// 		}
-			
-	// 	}
-		
-	// }
-	
-
-	//移動処理
 	if ( player.move === 0 ) {
 		if ( btn.left === true ) {
 			var x = player.x/48;
@@ -206,63 +150,31 @@ function main(i) {
 				}
 			}
 		}
-		// if ( btn.attack === true ) {
-		// 	var x = player.x/48;
-		// 	var y = player.y/48;
 
-		// 		if ( map[y][x+1] === 3) {
-		// 			//3を0に変更
-		// 			map[y][x+1]=0;
-		// 			btn.push = 'attack';
-		// 		}if( map[y][x-1] === 3){
-		// 			map[y][x-1]=0;
-		// 			btn.push = 'attack';
-		// 		}if( map[y+1][x] === 3){
-		// 			map[y+1][x]=0;
-		// 			btn.push = 'attack';
-		// 		}if( map[y-1][x] === 3){
-		// 			map[y-1][x]=0;
-		// 			btn.push = 'attack';
-		// 		}
-			
-		// }
 		btn.left = false;
 		btn.up = false;
 		btn.right = false;
 		btn.down = false;
-		// btn.attack = false;
 
-		//ゴール後の処理
 		function stop(){
-			// player.move = 32; //clear.htmlにすぐ移動するならいらない
-			line.length = 0; //配列を空に
-			
-
-			//clear.htmlにクリア情報受け渡し
+			line.length = 0; 
 			var clearcount;
 			window.localStorage.setItem("clearcount",count);
 			var clearcountshortest;
 			window.localStorage.setItem("clearcountshortest",shortest_count);
 
-			//最短クリア回数チェック
 			var shortest_check = 3;
 			window.localStorage.setItem("shortest_check",shortest_check);
 			
-			var filename="stage4.html";//次のページのhtmlを記載
+			var filename="gamerule2.html";
 			window.localStorage.setItem("filename",filename);
-			// console.log(datet);
 
 			window.setTimeout(function(){
-				window.location.href = "clear.html"; //画面遷移
-			}, 1000);
+				window.location.href = "clear.html"; 
+			}, 500);
 		}
 	}
 
-
-	// if (player.move > 0) {
-	// }
-
-	
 	movement();
 	function movement(){
 		for (let k=0; player.move>0; k++) {
@@ -273,44 +185,50 @@ function main(i) {
 			if ( btn.push === 'down' ) player.y += 48;
 		}
 	}
-
- 
 	requestAnimationFrame( main );
 }
 
-//ページと依存している全てのデータが読み込まれたら、メインループ開始
 addEventListener('load', main(), false);
  
-//移動時に呼び出される関数
 function go(i) {
 	console.log("go実行("+"%d"+"回目)", i+1);
 	console.log(line[i]);
-	// console.log(player.move);
 	if( line[i]=="左" ) btn.left = true;
 	if( line[i]=="上" ) btn.up = true;
 	if( line[i]=="右" ) btn.right = true;
 	if( line[i]=="下" ) btn.down = true;
-	// if( line[i]=="攻撃" ) btn.attack = true;
+
+	if(i===line.length-1){//for文最後の実行時に実行（再チャレンジ表示）
+		//移動終わったら表示
+		window.setTimeout(function(){
+			document.getElementById("again_data").hidden=false;
+			console.log("再チャレンジ表示");
+			document.getElementById("comment").innerHTML = "<span class='under1'>もういちどかんがえてみよう！</span>";
+		}, 600);
+	}
 }
 
-
-//実行ボタンクリック時の処理
 document.getElementById("act").onclick = function() {
-	//移動ボタン非表示
-	document.getElementById("right").hidden=true;
-	document.getElementById("left").hidden=true;
-	document.getElementById("up").hidden=true;
-	document.getElementById("down").hidden=true;
-	document.getElementById("act").hidden=true;
-	// document.getElementById("attack").hidden=true;
+	if(line.length>=1){//しろくまくんの動きが入力されていたら実行
+		document.getElementById("right").hidden=true;
+		document.getElementById("left").hidden=true;
+		document.getElementById("up").hidden=true;
+		document.getElementById("down").hidden=true;
+		document.getElementById("act").hidden=true;
+		document.getElementById("del").hidden=true;
+		document.getElementById("again").hidden=true;
 
-	// 配列の要素回数の移動処理繰り返し
-	for (let i=0; i<line.length; i++) {
-		//0.5秒おきに移動
+		for (let i=0; i<line.length; i++) {
+			window.setTimeout(function(){
+				go(i);
+				main(i);
+			}, 500*i);
+		}
+	}else{
+		console.log("動きを命令してないよ");
+		document.getElementById("comment").innerHTML = "<span class='under1'>しろくまくんにうごきをおしえよう！<span>";
 		window.setTimeout(function(){
-			go(i);
-			main(i);
-		}, 500*i);
+			document.getElementById("comment").innerHTML = "<p id=comment><span class='under'>シロクマくんを１ばんすくない<ruby>数<rt>かず</rt></ruby>でゴールまでうごかそう！</span></p>";
+		}, 2000);
 	}
-
 };

@@ -8,7 +8,7 @@ var ctx = canvas.getContext( '2d' );
 //オブジェクト作成
 var player = new Object();
 player.img = new Image();
-player.img.src = 'img/player2.png';
+player.img.src = 'img/player/player.png';
 player.x = 48;
 player.y = 48;
 player.move = 0;
@@ -16,7 +16,7 @@ player.move = 0;
  
 //マップチップのImageオブジェクト作成
 var mapchip = new Image();
-mapchip.src = 'img/bossstage/bossstage.png';
+mapchip.src = 'img/stage/bossstage.png';
  
 //キーボードのオブジェクトを作成
 var btn = new Object();
@@ -38,6 +38,19 @@ bbb_enemy=[];
 // var hp;
 var d_hp = window.localStorage.getItem("d_hp");
 console.log(d_hp);
+
+d_hp-=0;//stringからnumberにするための処理
+
+//残hpによってボス画像変更
+var boss = document.getElementById('boss');
+if(d_hp<=70){
+	boss.setAttribute('src', 'img/bossstage/boss/boss2.png');//画像変更
+}if(d_hp<=40){
+	boss.setAttribute('src', 'img/bossstage/boss/boss3.png');//画像変更
+}if(d_hp<=20){
+	boss.setAttribute('src', 'img/bossstage/boss/boss4.png');//画像変更
+}
+
 
 //hpゲージ設定
 var meter = document.getElementById('meter');
@@ -659,7 +672,7 @@ function main(i) {
 
 			window.setTimeout(function(){
 				window.location.href = "bossstage5.html"; //画面遷移
-			}, 1000);
+			}, 500);
 			
 
 
@@ -705,30 +718,54 @@ function go(i) {
 	if( line[i]=="下" ) btn.down = true;
 	if( line[i]=="攻撃" ) btn.attack = true;
     // if( line[i]=="攻撃2" ) btn.attack2 = true;
-    // if( line[i]=="攻撃3" ) btn.attack3 = true;
+	// if( line[i]=="攻撃3" ) btn.attack3 = true;
+	
+	if(i===line.length-1){//for文最後の実行時に実行（再チャレンジ表示）
+		//移動終わったら表示
+		window.setTimeout(function(){
+			document.getElementById("again_data").hidden=false;
+			console.log("再チャレンジ表示");
+			player.img.src = 'img/player/player.png';//しろくまくん元に戻す
+			document.getElementById("comment").innerHTML = "<span class='under'>もういちどかんがえてみよう！</span>";
+		}, 600);
+	}
 }
 
 
 //実行ボタンクリック時の処理
 document.getElementById("act").onclick = function() {
-	//移動ボタン非表示
-	document.getElementById("right").hidden=true;
-	document.getElementById("left").hidden=true;
-	document.getElementById("up").hidden=true;
-	document.getElementById("down").hidden=true;
-	document.getElementById("act").hidden=true;
-	document.getElementById("attack").hidden=true;
-    // document.getElementById("attack2").hidden=true;
-    // document.getElementById("attack3").hidden=true;
+	if(line.length>=1){//しろくまくんの動きが入力されていたら実行
+		//移動ボタン非表示
+		document.getElementById("right").hidden=true;
+		document.getElementById("left").hidden=true;
+		document.getElementById("up").hidden=true;
+		document.getElementById("down").hidden=true;
+		document.getElementById("act").hidden=true;
+		document.getElementById("attack").hidden=true;
+		// document.getElementById("attack2").hidden=true;
+		// document.getElementById("attack3").hidden=true;
+		document.getElementById("del").hidden=true;
+		document.getElementById("again").hidden=true;
 
-	// 配列の要素回数の移動処理繰り返し
-	for (let i=0; i<line.length; i++) {
-		//0.5秒おきに移動
+		// 配列の要素回数の移動処理繰り返し
+		for (let i=0; i<line.length; i++) {
+			//0.5秒おきに移動
+			window.setTimeout(function(){
+				if(line[i]=="攻撃"){//しろくまにコーン持たせる処理
+					player.img.src = 'img/player/player_icc.png';
+				}else{
+					player.img.src = 'img/player/player.png';
+				}
+				go(i);
+				main(i);
+			}, 500*i);
+		}
+	}else{
+		console.log("動きを命令してないよ");
+		document.getElementById("comment").innerHTML = "<span class='under'>しろくまくんにうごきをおしえよう！<span>";
 		window.setTimeout(function(){
-			go(i);
-			main(i);
-		}, 500*i);
+			document.getElementById("comment").innerHTML = "";
+		}, 2000);
 	}
-
 };
 

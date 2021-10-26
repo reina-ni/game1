@@ -16,7 +16,7 @@ player.move = 0;
 //マップチップのImageオブジェクト作成
 var mapchip = new Image();
 // mapchip.src = '地面.png';
-mapchip.src = 'img/stage48-4rule.png';
+mapchip.src = 'img/stage48-4.png';
  
 //キーボードのオブジェクトを作成
 var btn = new Object();

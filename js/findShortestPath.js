@@ -177,6 +177,5 @@ function pathfinding(){
     pathmap[h_goal][w_goal]=2;
 
 
-
     return pathresult;
 }
