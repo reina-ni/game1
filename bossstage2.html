@@ -1,306 +1,305 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="UTF-8">
-	<title>ぼうけんゲーム</title>
-	<link rel="stylesheet" href="style.css">
-	<link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
-	<!-- ビューポートの設定 -->
 	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="icon" href="img/player/player.png">
+	<title>シロクマくんのぼうけん</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <style>
 	*{ background:#FFC29B;}
+
+	div{
+		text-align: center;
+		margin-top: 1%;
+		margin-left: 1%;
+		margin-right: 1%;
+	}
+	p{
+		margin: none;
+	}
+	/* #site-box{
+		width : 650px ; 
+		margin: auto;
+	} */
 	#stage{
+		text-align: center;
 		background:#FF7061;
 	}
-	
-	#site-box{
-		width : 600px ; 
-		margin: auto;
-	}
 	#container{
+		margin-top: none;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		flex-wrap: wrap;
 	}
-	p{
-		margin-top:none;
+	#move,#count{
+		text-align: left;
+		margin-left: 5%;
 	}
-	div{
-		margin-top: 1%;
-		margin-left: 1%;
-		margin-right: 1%;
-	}
-	
 	.flex{
         display: flex;
         justify-content: center;
         margin-top: 2%;
 	}
-	#order{
+	.flex2{
+        background-color: none;
+		position: absolute;
+        display: flex;
+        justify-content: right;
+        margin-top: 0%;
+    }
+	#order,#order_answer{
 		border-color: #FF7061;
 	}
-	#order_answer{
-		border-color: #FF7061;
+	meter{
+		width: 100px;
+		height: 20px;
 	}
-	/* #life-frame {
-    margin: 0 auto;
-    width: 80%;
-    background-color: rgba(10, 0, 50, 0.6);
-    display: flex;
-    padding: 3px 3px;
-}
-#life-bar {
-    height: 3px;
-    background-color: rgb(0, 255, 255);
-    transition: 300ms
-}
-#life-mark {
-    width: 3px;
-    height: 3px;
-    border-radius: 3px;
-    background-color: rgb(255, 255, 255);
-    filter: saturate(500%);
-    box-shadow: 0 0 5px 3px rgb(200, 255, 255),
-                0 0 7px 7px rgb(100, 255, 255);
-}
-#btns-wrap {
-    width: 100px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-around;
-}
-#increase-btn,#decrease-btn {
-    margin-top: 10px;
-    width: 30px;
-    height: 30px;
-    border-radius: 5px;
-    color: white;
-    background-color: dodgerblue;
-    text-align: center;
-    line-height: 30px;
-    box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    user-select: none;
-}
-#increase-btn:active,#decrease-btn:active {
-    transform: translate(2px,2px);
-    box-shadow: none;
-    } */
+	#wrapper{
+		margin-top: 1%;
+	}
+	.audio_button {
+		width: 20px;
+		height: 20px;
+		margin-top: 0%;
+		margin-left: 1%;
+		background: url(img/command/bgm.png)no-repeat;
+		background-size: contain;
+	}
+  	.play .audio_button {
+    	background-image: url(img/command/bgm_off.png);
+  	}
 </style>
 
-<!-- bossalert -->
 <body>
-		<!-- <div class="flash-title">
-			<img src="img/boss_alert.png" width="100%">
-		  </div> -->
-    
+		<div id ="site-box">
+			<p id="stage">アザラシくんといっしょにドラゴンをたおそう！</p>
+			<div class="flex2">
+			<div class="audio_wrap">
+				<div class="audio_button">
+					<audio id="audio" src="music/bossstage-maoudamashii.mp3" loop>
+						あなたのブラウザーは<code>audio</code>要素をサポートしていません。</audio>
+				</div>
+			</div>
 
-	</head>
+			<label class="open" for="pop-up"><img src="img/command/gamerule.png" width="20px" height="20px"></label>
+			<input type="checkbox" id="pop-up">
+				<div class="overlay">
+					<div class="window2">
+						<br>
+						<p>あそびかた</p>
+						<label class="close" for="pop-up">×</label>
+						<ul id="list">
+							<li class="item"><img src="img/command/left.png" width="20">　ひだりに１マスすすむ</li>
+							<li class="item"><img src="img/command/right.png" width="20">　みぎに１マスすすむ</li>
+							<li class="item"><img src="img/command/up.png" width="20">　うえに１マスすすむ</li>
+							<li class="item"><img src="img/command/down.png" width="20">　したに１マスすすむ</li>
+							<li class="item"><img src="img/command/del.png" width="20">　うごきをひとつけす</li>
+							<li class="item"><img src="img/command/restart.png" width="20">　うごきをぜんぶけす</li>
+							<li class="item"><img src="img/command/bgm.png" width="20">　おんがくをながす</li>
+							<li class="item"><img src="img/command/bgm_off.png" width="20">　おんがくをとめる</li>
+							<li class="item"><img src="img/command/icc.png" width="20">
+											<img src="img/command/icgr.png" width="20"> をとれる</li>
+						</ul>
+						<br><br><br><br><br><br><br>
+						<p><span class="under2">アイスコーンはアイスのあるマスでつかえるよ！</span><br>アイスのある１マスまえのマスではつかえないよ！</p>
+						<!-- <p>シロクマくんを１ばんすくない<ruby>数<rt>かず</rt></ruby>でうごかして<br><span class="under2">ドラゴンとおなじアイスをあつめよう。</span></p> -->
+						<p>アイスを<ruby>正<rt>ただ</rt></ruby>しくあつめるとドラゴンをこうげきできるよ！</p>
+						<span class="under">シロクマくんはまとめてしかうごけないよ！</span><br><br>
+					</div>
+				</div>
+			</div>
 
-	<body>
+					<audio id="SE"preload="auto"><source src="music/SE.mp3" type="audio/mp3"></audio>
+			<form action="#" name="form1"></form>
+			<p id=comment></p>
 
-		<div id="site-box">
-		<p id="stage">アザラシくんといっしょにドラゴンをたおそう！</p>
-		<form action="#" name="form1">
-			</form>
 			<div class="float">
 				<div class="flex">
-				
 					<div id="container">
-						
-							<img src="img/empty.png" height="100" id="order_answer">
-							<img src="img/playerclear02.png" height="100" >
-							<!-- <div id="life-frame">
-								<div id="life-bar"></div>
-								<div id="life-mark"></div>
-							</div> -->
-							<!-- <p>HP:10</p> -->
-							<!-- <p>あざらしくんHP<meter value="0.3">30%</meter></p> -->
-							<p>　　　　　　</p>
-							
-					  </div>
+						<img src="img/bossstage/empty.png" height="100" id="order_answer">
+						<img src="img/player/playerclear02.png" height="100" >
+						<p>　　　　　　</p></div>
 
-		
-
-		<!-- 各ボタン作成 -->
-		<div><canvas id="canvas"></canvas></div>
-
-		<div id="container">
-			<img src="img/empty.png" height="100" id="order">
-			<img src="img/playerclear01.png" height="100" >
-			<p>ドラゴンHP<meter max="100" low="60" high="80" value="100" id="meter"></meter></p>
-			
-	  </div>
-	  </div>
-	  </div>
-
+					<div><canvas id="canvas"></canvas></div>
+					<div id="container">
+						<img src="img/bossstage/empty.png" height="100" id="order">
+						<img src="img/bossstage/boss/boss.png" height="100" id="boss">
+						<p>ドラゴンHP<meter max="100" low="60" high="80" value="100" id="meter"></meter></p>
+					</div>
+				</div>
+			</div>
+	  	</div>
 		<div>
-			<button type="button" id="right"><img src="img/command/right.png" id="右"></button>
 			<button type="button" id="left"><img src="img/command/left.png" id="左"></button>
+			<button type="button" id="right"><img src="img/command/right.png" id="右"></button>
 			<button type="button" id="up"><img src="img/command/up.png" id="上"></button>
 			<button type="button" id="down"><img src="img/command/down.png" id="下"></button>
 			<button type="button" id="act"><img src="img/command/bossaction.png"></button>
 			<button type="button" id="again"><img src="img/command/restart.png"></button>
+			<button type="button" id="again_data"><img src="img/command/restart_data.png"></button>
+			<!-- 一つ選択消すボタン -->
+			<button type="button" id="del"><img src="img/command/del.png"></button>
 			<button type="button" id="attack"><img src="img/command/icc.png"></button>
-            <!-- <button type="button" id="attack2"><img src="img/command/nicc.png"></button> -->
-            <!-- <button type="button" id="attack3"><img src="img/command/icelv3.png"></button> -->
 		</div>
-		<script>
-			// document.getElementById("attack3").hidden = true;
-			// シロクマくんのうごくかずカウント
-			var count = 0;
 
-			var line = [];
-			var image = { "右":"<img src='img/command/right.png' width=3%>", 
-						"左":"<img src='img/command/left.png' width=3%>", 
-						"上":"<img src='img/command/up.png' width=3%>",
-						"下":"<img src='img/command/down.png' width=3%>",
-						"攻撃":"<img src='img/command/icc.png' width=3%>"
-						// ,
-						// "攻撃2":"<img src='img/command/nicc.png' width=3%>"
-						// ,
-						// "攻撃3":"<img src='img/command/icelv3.png' width=3%>"
-					}
+<script>
+	document.getElementById("again_data").hidden=true;//データ残しながらやり直すボタン
 
-			// 各ボタンがクリックさせた時の処理
-			document.getElementById("right").onclick = function () {
-				count++;
-				document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
-				line.push("右"); //配列に格納
-				console.log(line);
-				document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
-				rewrite();
-			};
-			document.getElementById("left").onclick = function () {
-				count++;
-				document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
-				line.push("左");
-				console.log(line);
-				document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
-				rewrite();
-			};
-			document.getElementById("up").onclick = function () {
-				count++;
-				document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
-				line.push("上");
-				console.log(line);
-				document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
-				rewrite();
-			};
-			document.getElementById("down").onclick = function () {
-				count++;
-				document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
-				line.push("下");
-				console.log(line);
-				document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
-				rewrite();
-			};
-			document.getElementById("attack").onclick = function () {
-				//最短シロクマくんのうごくかずが変わっちゃうからcountプラスしない
-				document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
-				line.push("攻撃");
-				console.log(line);
-				document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
-				rewrite();
-			};
-			// document.getElementById("attack2").onclick = function () {
-			// 	//最短シロクマくんのうごくかずが変わっちゃうからcountプラスしない
-			// 	document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
-			// 	line.push("攻撃2");
-			// 	console.log(line);
-			// 	document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
-			// 	rewrite();
-			// };
-            // document.getElementById("attack3").onclick = function () {
-			// 	//最短シロクマくんのうごくかずが変わっちゃうからcountプラスしない
-			// 	document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
-			// 	line.push("攻撃3");
-			// 	console.log(line);
-			// 	document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
-			// 	rewrite();
-			// };
+	var count = 0;
 
-			//配列削除（初期化）やり直すボタンクリック時の処理
-			document.getElementById("again").onclick = function () {
-				//移動ボタン表示
-				document.getElementById("right").hidden = false;
-				document.getElementById("left").hidden = false;
-				document.getElementById("up").hidden = false;
-				document.getElementById("down").hidden = false;
-				document.getElementById("act").hidden = false;
-				document.getElementById("attack").hidden = false;
-                // document.getElementById("attack2").hidden = false;
-                // document.getElementById("attack3").hidden = true;
-				count = 0; //カウント初期化
-				document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
-				line.length = 0; //配列を空に
-				console.log(line);
-				document.getElementById("move").innerHTML = "シロクマくんのうごき："
-				player.move = 0;
-				get_enemy();//敵の再配置
-				// プレイヤーをスタート位置へ
-				player.x = 48;
-				player.y = 48;
-				order_answer.setAttribute('src', 'img/empty.png');
-			};
-			
+	var line = [];
+	var image = { "右":"<img src='img/command/right.png' width=3%>", 
+				"左":"<img src='img/command/left.png' width=3%>", 
+				"上":"<img src='img/command/up.png' width=3%>",
+				"下":"<img src='img/command/down.png' width=3%>",
+				"攻撃":"<img src='img/command/icc.png' width=3%>"}
 
-			//移動方向表示p1書き換え
-			function rewrite() {
-				if (line.length > 1) {
-					for (let j = 1; j < line.length; j++) {
-						// document.getElementById("move").innerHTML += "→" + line[j];
-						var url=image[line[j]];
-						document.getElementById("move").innerHTML += url;
-						// document.write("<img src='" + image["line[j]"] +"'>");
-					}
-				}
+	document.getElementById("right").onclick = function () {
+		count++;
+		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
+		line.push("右"); 
+		console.log(line);
+		document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+		rewrite();
+	};
+	document.getElementById("left").onclick = function () {
+		count++;
+		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
+		line.push("左");
+		console.log(line);
+		document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+		rewrite();
+	};
+	document.getElementById("up").onclick = function () {
+		count++;
+		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
+		line.push("上");
+		console.log(line);
+		document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+		rewrite();
+	};
+	document.getElementById("down").onclick = function () {
+		count++;
+		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
+		line.push("下");
+		console.log(line);
+		document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+		rewrite();
+	};
+	document.getElementById("attack").onclick = function () {
+		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
+		line.push("攻撃");
+		console.log(line);
+		document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+		rewrite();
+	};
+
+	document.getElementById("again").onclick = function () {
+		document.getElementById("right").hidden = false;
+		document.getElementById("left").hidden = false;
+		document.getElementById("up").hidden = false;
+		document.getElementById("down").hidden = false;
+		document.getElementById("act").hidden = false;
+		document.getElementById("attack").hidden = false;
+		document.getElementById("del").hidden = false;
+
+		count = 0; 
+		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
+
+		line.length = 0; 
+		console.log(line);
+		document.getElementById("move").innerHTML = "シロクマくんのうごき："
+		player.move = 0; 
+		get_enemy();
+
+		player.x = 48;
+		player.y = 48;
+		order_answer.setAttribute('src', 'img/bossstage/empty.png');
+	};
+
+	//データ残してやり直す処理
+	document.getElementById("again_data").onclick = function () {
+	document.getElementById("again_data").hidden = true;
+	document.getElementById("right").hidden = false;
+	document.getElementById("left").hidden = false;
+	document.getElementById("up").hidden = false;
+	document.getElementById("down").hidden = false;
+	document.getElementById("act").hidden = false;
+	document.getElementById("del").hidden = false;
+	document.getElementById("again").hidden = false;
+	document.getElementById("attack").hidden = false;
+	document.getElementById("comment").innerHTML = "";
+
+	get_enemy();
+	player.x = 48;
+	player.y = 48;
+	player.move = 0;
+	order_answer.setAttribute('src', 'img/bossstage/empty.png');
+	};
+
+	//一つ選択消す処理
+	document.getElementById("del").onclick = function () {
+		line.pop();//line配列末尾削除
+		console.log(line);
+		if(count>0){
+			count-=1;//移動回数一つ減らす
+		}
+		if(count===0){
+			document.getElementById("move").innerHTML = "シロクマくんのうごき：";
+		}
+		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
+		
+		if (line.length > 0) {
+			document.getElementById("move").innerHTML = "シロクマくんのうごき：";
+			for (let j = 0; j < line.length; j++) {
+				var url=image[line[j]];
+				document.getElementById("move").innerHTML += url;
 			}
+		}
+	};
 
+	function rewrite() {
+		if (line.length > 1) {
+			for (let j = 1; j < line.length; j++) {
+				var url=image[line[j]];
+				document.getElementById("move").innerHTML += url;
+			}
+		}
+	}
+	
+	$(function () {
+		var audioBtn = $('.audio_button'),
+		audioWrap = $('.audio_wrap'),
+		audio = document.getElementById('audio');
+			
+		audioBtn.on('click', function () {
+		if( audioWrap.hasClass('play') ) {
+		audio.pause();
+		audioWrap.removeClass('play');
+		} else {
+		audio.play();
+		audioWrap.addClass('play');
+		}
+		});
+	});
+	$("button").on("click",　function(){
+		SE.currentTime = 0;
+		SE.play();
+	});
+</script>
+		
+		<p1 id=move>シロクマくんのうごき：</p1><br>
+		<p2 id=count>シロクマくんのうごくかず：０</p2>
 
-
-// const lifeBar = document.getElementById('life-bar')         // ライフバー
-// const lifeMark = document.getElementById('life-mark')       // ライフの光部分
-// // const increaseBtn = document.getElementById('increase-btn') // + ボタン
-// // const decreaseBtn = document.getElementById('decrease-btn') // - ボタン
-// let life = 100                                              // ライフ初期値
-// lifeBar.style.width = "100%"                                // ライフ初期幅
-// // *** ライフ変更処理 ***
-// function alterLife( value ){
-//     // lifeの値を算出する
-//     life += value 
-//     if ( life <= 0 ){
-//         // 算出の結果 0 以下になった場合
-//         life = 0
-//         // 0.3秒後に光部分を非表示にする
-//         setTimeout(function(){
-//             lifeMark.style.visibility = 'hidden'
-//         }, 300)
-//     } else {
-//         // 算出の結果 100 を超過した場合
-//         if ( life > 100 ) {
-//             life = 100
-//         }
-//         // 光部分を表示する
-//         lifeMark.style.visibility = 'visible'
-//     }
-//     // スタイル(幅)を更新する
-//     lifeBar.style.width = life + "%"
-// }
-
-
-		</script>
-
-		<!-- 表示 -->
-<p1 id=move>シロクマくんのうごき：</p1><br>
-<p2 id=count>シロクマくんのうごくかず：０</p2>
-
-		<script type="text/javascript" src="js/findShortestPath.js"></script>
-		<script type="text/javascript" src="js/scriptbossstage2.js"></script>
-
-	</body>
-
+<script type="text/javascript" src="js/findShortestPath.js"></script>
+<script type="text/javascript" src="js/scriptbossstage2.js"></script>
+</body>
 </html>
+
+
+<!-- bgm:MaouDamashii -->

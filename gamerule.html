@@ -1,457 +1,201 @@
 <!DOCTYPE html>
-<html lang="jp">
+<html>
 <head>
-<title>ぼうけんげーむ</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="style.css">
-<meta http-equiv="content-type" charset="utf-8">
-<link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
-<script src="https://kit.fontawesome.com/c8c7df9a62.js" crossorigin="anonymous"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
-<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
-   <script type="text/javascript">
-    $(window).load(function() {
-		$('#drawer-navigation').fadeIn(0); 
-    });
-    $(function() {
-      const hum = $('#hamburger, .close')
-      const nav = $('.sp-nav')
-      hum.on('click', function(){
-         nav.toggleClass('toggle');
-      });
-    });
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" href="img/player/player.png">
+    <title>シロクマくんのぼうけん</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
+
 <style>
-#up{
-  display: none;
-}
-#down{
-  display: none;
-}
-#rule{
-  text-align: center;
-}
-
-
-  .under {
-  background: linear-gradient(transparent 50%, #a8eaff 50%);
-}
-.sb-box {
-  position: relative;
-  overflow: hidden;
-  
-  margin-left: 20px;
-  margin-right: 20px;
-}
-/* アイコン画像 */
-.icon-img {
-  position: absolute;
-  overflow: hidden;
-  top: 0; /* 画像の位置を上から0に */
-  width: 80px; /* 画像の幅 */
-  height: 80px; /* 画像の高さ */
-}
-/* アイコン画像（左） */
-.icon-img-left {
-  left: 0; /* 画像の位置を左から0に */
-}
-/* アイコン画像（右） */
-.icon-img-right {
-  right: 0; /* 画像の位置を右から0に */
-}
-/* アイコンネーム */
-.icon-name {
-  position: absolute;
-  width: 80px; /* ネームの最大幅を画像と同じに */
-  text-align: center; /* ネームの位置をセンターに */
-  top: 83px; /* ネームの位置を上から83に */
-  color: aliceblue; /* ネームのカラー */
-  font-size: 10px; /* ネームのフォントサイズ */
-}
-/* アイコンネーム（左） */
-.icon-name-left {
-  left: 0; /* ネームの位置を左から0に */
-}
-/* アイコンネーム（右） */
-.icon-name-right {
-  right: 0; /* ネームの位置を右から0に */
-}
-/* 吹き出し */
-.sb-side {
-  position: relative;
-  float: left;
-  margin: 0 105px 40px 105px; /* 吹き出しの上下左右の余白 */
-}
-.sb-side-right {
-  float: right;
-}
-/* 吹き出し内のテキスト */
-.sb-txt {
-  font-family: 'M PLUS Rounded 1c';
-  position: relative;
-  border: 2px solid #eee; /* 吹き出しの縁取りの太さとカラー */
-  border-radius: 10px; /* 吹き出しを角丸に */
-  background: #fff; /* 吹き出しの背景色 */
-  color: #333; /* 吹き出し内のテキストのカラー */
-  font-size: 15px; /* 吹き出し内のフォントサイズ */
-  line-height: 1.7; /* 吹き出し内のテキストが2行以上になった時の行間 */
-  padding: 18px; /* 吹き出し内の上下左右の余白 */
-}
-.sb-txt > p:last-of-type {
-  padding-bottom: 0; /* 吹き出し内のテキストを改行した場合、最後のpタグにpadding-bottomをつけない */
-  margin-bottom: 0; /* 吹き出し内のテキストを改行した場合、最後のpタグにmargin-bottomをつけない */
-}
-/* 吹き出しの三角 */
-.sb-txt:before {
-  content: "";
-  position: absolute;
-  border-style: solid;
-  top: 16px; /* 吹き出し内の三角の位置 */
-  z-index: 3;
-}
-.sb-txt:after {
-  content: "";
-  position: absolute;
-  border-style: solid;
-  top: 15px; /* beforeより-1px */
-  z-index: 2; /* beforeより-1 */
-}
-/* 吹き出しの三角（左） */
-.sb-txt-left:before {
-  left: -7px;
-  border-width: 7px 10px 7px 0;
-  border-color: transparent #fff transparent transparent; /* 背景色と同じカラーに */
-}
-.sb-txt-left:after {
-  left: -10px; /* beforeより-3px */
-  border-width: 8px 10px 8px 0; /* beforeより上下+1px */
-  border-color: transparent #eee transparent transparent; /* 縁取りと同じカラーに */
-}
-/* 吹き出しの三角（右） */
-.sb-txt-right:before {
-  right: -7px;
-  border-width: 7px 0 7px 10px;
-  border-color: transparent transparent transparent #fff; /* 背景色と同じカラーに */
-}
-.sb-txt-right:after {
-  right: -10px; /* beforeより-3px */
-  border-width: 8px 0 8px 10px; /* beforeより上下+1px */
-  border-color: transparent transparent transparent #eee; /* 縁取りと同じカラーに */
-}
-
-/* 767px（iPad）以下 */
-
-@media (max-width: 767px) {
-  /* アイコン画像 */
-  .icon-img {
-    width: 60px; /* 画像の幅を-20px */
-    height: 60px; /* 画像の高さを-20px */
-  }
-  /* アイコンネーム */
-  .icon-name {
-    width: 60px; /* 画像の幅に合わせて-20px */
-    top: 62px; /* ネームの位置を上から62に */
-    font-size: 9px; /* ネームのフォントサイズを-1px */
-  }
-  /* 吹き出し（左） */
-  .sb-side-left {
-    margin: 0 0 30px 78px; /* 吹き出し（左）の上下左右の余白を狭く */
-  }
-  /* 吹き出し（右） */
-  .sb-side-right {
-    margin: 0 78px 30px 0; /* 吹き出し（右）の上下左右の余白を狭く */
-  }
-  /* 吹き出し内のテキスト */
-  .sb-txt {
-    padding: 12px; /* 吹き出し内の上下左右の余白を-6px */
-  }
-}
-
-
-
+     #site-box{
+        width: 700px;
+ }
+    .under {
+        background: linear-gradient(transparent 50%, #a5ccdf 50%);
+    }
 </style>
+
 <body>
-  <div id=rule>
-  <img src="img/rule.png" width="400">
-</div>
+    <div id="site-box">
+        <h1>ストーリー＆あそびかた</h1>
+            <p>シロクマくんはあまくてつめたいアイスがだいすきです。<br>きょうもシロクマくんはだいすきなアイスをたべていました。</p>
+            <p>しかし・・・</p>
+            <p>とつぜんシロクマくんがたべていたアイスが、ぜーんぶとけてしまったのです！</p>
+                <img src="img/player/player-story.png" height="50">
+                <img src="img/bossstage/boss/boss-story.png" height="50">
+            <p> そらをみると、ドラゴンがひをだしていました。<br>ドラゴンがシロクマくんのアイスをとかしてしまったのです！</p>
+            <p>アイスはとけて、もうたべることができません。</p>
+            <p> シロクマくんはドラゴンをたおしにいくことにきめたのでした！</p><br>
+            <div class="sb-box">
+                <div class="icon-img icon-img-left">
+                    <img src="img/player/player.png"></div>
+                        <div class="icon-name icon-name-left">シロクマくん</div>
+                            <div class="sb-side sb-side-left">
+                                <div class="sb-txt sb-txt-left">ドラゴンをたおしにいかなくちゃ！<br>
+                                                                アザラシくんにもてつだってほしいんだ</div>
+                            </div>
+            </div>
 
+            <div class="sb-box">
+                <div class="icon-img icon-img-right">
+                    <img src="img/player/player2.png"></div>
+                    <div class="icon-name icon-name-right">アザラシくん</div>
+                        <div class="sb-side sb-side-right">
+                            <div class="sb-txt sb-txt-right">もちろん！ぼくはなにをしたらいいかな？</div>
+                        </div>
+            </div>
 
+            <div class="sb-box">
+                <div class="icon-img icon-img-left">
+                    <img src="img/player/player.png"></div>
+                        <div class="icon-name icon-name-left">シロクマくん</div>
+                            <div class="sb-side sb-side-left">
+                                <div class="sb-txt sb-txt-left">ドラゴンのすみかへのいきかたをおしえて<br>
+                                                                ピンクいろのばしょにつけば、つぎにすすめるんだ！
+                                </div>
+                            </div>
+                            <div class="sb-side sb-side-left">
+                                <div class="sb-txt sb-txt-left">
+                                    <img src="img/gamerule/gr1-1.png" width="500">
+                                </div>
+                            </div>
+            </div>
 
-<div class="sb-box">
-  <div class="icon-img icon-img-left">
-    <img src="img/player.png"></div>
-  <div class="icon-name icon-name-left">シロクマくん</div>
-  <div class="sb-side sb-side-left">
-    <div class="sb-txt sb-txt-left">ぼくのぼうけんをてつだって！</div>
-  </div>
-</div>
+            <div class="sb-box">
+                <div class="icon-img icon-img-right">
+                    <img src="img/player/player2.png"></div>
+                        <div class="icon-name icon-name-right">アザラシくん</div>
+                            <div class="sb-side sb-side-right">
+                                <div class="sb-txt sb-txt-right">それならかんたんだね！このボタンをつかえばいいのかな？</span></div>
+                            </div>
+                            <div class="sb-side sb-side-right">
+                                <div class="sb-txt sb-txt-right">
+                                    <img src="img/gamerule/gr1-2.png" width="500">
+                                </div>
+                            </div>
+            </div>
 
-<div class="sb-box">
-  <div class="icon-img icon-img-right">
-    <img src="img/player2.png"></div>
-  <div class="icon-name icon-name-right">アザラシくん</div>
-  <div class="sb-side sb-side-right">
-    <div class="sb-txt sb-txt-right">もちろん！・・でもどうやって、てつだえばいい？</div>
-  </div>
-</div>
+            <div class="sb-box">
+                <div class="icon-img icon-img-left">
+                    <img src="img/player/player.png"></div>
+                        <div class="icon-name icon-name-left">シロクマくん</div>
+                            <div class="sb-side sb-side-left">
+                                <div class="sb-txt sb-txt-left">さすがアザラシくん、せいかい！<br>
+                                            <span class="under">これは６かい、みぎにうごけばゴールできるね</span>
+                                </div>
+                            </div>
+            </div>
 
-<div id="down0" class="sb-box">
-  <div class="icon-img icon-img-left">
-    <img src="img/player.png"></div>
-  <div class="icon-name icon-name-left">シロクマくん</div>
-  <div class="sb-side sb-side-left">
-    <div class="sb-txt sb-txt-left"><span class="under">ボタンをつかって、</span></div>
-  </div>
-  <div class="sb-side sb-side-left">
-    <div class="sb-txt sb-txt-left"><span class="under">ゴールまでのいきかたをおしえてほしいんだ！</span></div>
-  </div>
-  <div class="sb-side sb-side-left">
-    <div class="sb-txt sb-txt-left">
-    <div><img src="img/rule01.png" width="500"></div>
-    </div>
-  </div>
-</div>
+            <div class="sb-box">
+                <div class="icon-img icon-img-right">
+                    <img src="img/player/player2.png"></div>
+                        <div class="icon-name icon-name-right">アザラシくん</div>
+                            <div class="sb-side sb-side-right">
+                                <div class="sb-txt sb-txt-right">すすむじゅんばんがきまったら、<br>
+                                                                チェックボタンをおせばいいんだね！</div>
+                            </div>
+                            <div class="sb-side sb-side-right">
+                                <div class="sb-txt sb-txt-right">
+                                    <img src="img/gamerule/gr1-3.png" width="500">
+                                </div>
+                            </div>
+                            <div class="sb-side sb-side-right">
+                                <div class="sb-txt sb-txt-right">あれ？シロクマくんがゴールいないよ？</div>
+                            </div>
+            </div>
+            
 
-<div class="sb-box">
-  <div class="icon-img icon-img-right">
-    <img src="img/player2.png"></div>
-  <div class="icon-name icon-name-right">アザラシくん</div>
-  <div class="sb-side sb-side-right">
-    <div class="sb-txt sb-txt-right"><span class="under">ピンクいろのばしょがゴールだね！</span></div>
-  </div>
-</div>
+            <div class="sb-box">
+                <div class="icon-img icon-img-left">
+                    <img src="img/player/player.png"></div>
+                        <div class="icon-name icon-name-left">シロクマくん</div>
+                            <div class="sb-side sb-side-left">
+                                <div class="sb-txt sb-txt-left">
+                                    <img src="img/gamerule/gr1-4.png" width="500">
+                                </div>
+                            </div>
+                            <div class="sb-side sb-side-left">
+                                <div class="sb-txt sb-txt-left">よくみて！<span class="under">６かいめが、ひだりにすすんでいるよ！</span></div>
+                            </div>
+                            <div class="sb-side sb-side-left">
+                                <div class="sb-txt sb-txt-left"><span class="under">みぎに６かい</span>じゃないと、ゴールできないから<br>
+                                                                <span class="under">やりなおしボタンをおして</span>もういちどちょうせんしてみよう！</div>
+                            </div>
+            </div>
 
-<div class="sb-box">
-  <div class="icon-img icon-img-left">
-    <img src="img/player.png"></div>
-  <div class="icon-name icon-name-left">シロクマくん</div>
-  <div class="sb-side sb-side-left">
-    <div class="sb-txt sb-txt-left">その通り！じゃあ、ぼくは<span class="under">なんかいすすめばゴールできるかな？</span></div>
-  </div>
-</div>
+            <div class="sb-box">
+                <div class="icon-img icon-img-right">
+                    <img src="img/player/player2.png"></div>
+                        <div class="icon-name icon-name-right">アザラシくん</div>
+                            <div class="sb-side sb-side-right">
+                                <div class="sb-txt sb-txt-right">ほんとうだ！やりなおしてみるね！</div>
+                            </div>
+                            <div class="sb-side sb-side-right">
+                                <div class="sb-txt sb-txt-right">
+                                    <img src="img/gamerule/gr1-5.png" width="500">
+                                </div>
+                            </div>
+            </div>
+            
+            <div class="sb-box">
+                <div class="icon-img icon-img-left">
+                    <img src="img/player/player.png"></div>
+                        <div class="icon-name icon-name-left">シロクマくん</div>
+                            <div class="sb-side sb-side-left">
+                                <div class="sb-txt sb-txt-left">せいかい！これでぼくはゴールできるよ！</div>
+                            </div>
+                            <div class="sb-side sb-side-left">
+                                <div class="sb-txt sb-txt-left">それから、ぼくは<span class="under">アザラシくんがおしえてくれたうごきを、<br>
+                                                                まとめてでしかすすめない</span>ことをよくおぼえておいてね！</div>
+                            </div>
+            </div>
 
-<div class="sb-box">
-  <div class="icon-img icon-img-right">
-    <img src="img/player2.png"></div>
-  <div class="icon-name icon-name-right">アザラシくん</div>
-  <div class="sb-side sb-side-right">
-    <div class="sb-txt sb-txt-right">えっと、<span class="under">みぎに6かいだね！</span></div>
-  </div>
-  <div class="sb-side sb-side-right">
-    <div class="sb-txt sb-txt-right">
-      <div><img src="img/rule02.png" width="500"></div>
-    </div>
-  </div>
-</div>
+            <div class="sb-box">
+                <div class="icon-img icon-img-right">
+                    <img src="img/player/player2.png"></div>
+                        <div class="icon-name icon-name-right">アザラシくん</div>
+                            <div class="sb-side sb-side-right">
+                                <div class="sb-txt sb-txt-right">それじゃあ・・・みぎに１かいうごいてチェックボタン、<br>
+                                                                またみぎに１かいうごいてチェックボタンはダメなんだね！</div>
+                            </div>
+            </div>
 
-<div id="down1" class="sb-box">
-  <div class="icon-img icon-img-left">
-    <img src="img/player.png"></div>
-  <div class="icon-name icon-name-left">シロクマくん</div>
-  <div class="sb-side sb-side-left">
-    <div class="sb-txt sb-txt-left"><span class="under">せいかい！じゃあ<span class="under">みぎボタンを６かい</span>おしてみよう！
-    </span></div>
-</div>
-</div>
+            <div class="sb-box">
+                <div class="icon-img icon-img-left">
+                    <img src="img/player/player.png"></div>
+                        <div class="icon-name icon-name-left">シロクマくん</div>
+                            <div class="sb-side sb-side-left">
+                                <div class="sb-txt sb-txt-left">そのとおり！なんかいでもやりなおせるから、<br>
+                                                                まちがえたら、やりなおしボタンをおしてね！</div>
+                            </div>
+                            <div class="sb-side sb-side-left">
+                                <div class="sb-txt sb-txt-left">もうバッチリだね！それじゃあ、ドラゴンをたおしにいこう！<br></div>
+                            </div>
+            </div>
 
-<div class="sb-box">
-  <div class="icon-img icon-img-right">
-    <img src="img/player2.png"></div>
-  <div class="icon-name icon-name-right">アザラシくん</div>
-  <div class="sb-side sb-side-right">
-    <div class="sb-txt sb-txt-right">あれ？ボタンをおしたのにゴールしないよ？</div>
-  </div>
-  <div class="sb-side sb-side-right">
-    <div class="sb-txt sb-txt-right">
-      <div><img src="img/rule03.png" width="500"></div>
-    </div>
-  </div>
-</div>
+            <div class="sb-box">
+                <div class="icon-img icon-img-right">
+                    <img src="img/player/player2.png"></div>
+                        <div class="icon-name icon-name-right">アザラシくん</div>
+                            <div class="sb-side sb-side-right">
+                                <div class="sb-txt sb-txt-right">おー！</div>
+                            </div>
+            </div>
 
-<div id="down2" class="sb-box">
-  <div class="icon-img icon-img-left">
-    <img src="img/player.png"></div>
-  <div class="icon-name icon-name-left">シロクマくん</div>
-  <div class="sb-side sb-side-left">
-    <div class="sb-txt sb-txt-left">よくみて！<span class="under">さいごにひだりをおしちゃってるよ！</span></div>
-  </div>
-  <div class="sb-side sb-side-left">
-    <div class="sb-txt sb-txt-left">ゴールできなかったときは、<span class="under">やりなおしボタン</span>をおして、<br>もういちどちょうせんしよう！</div>
-  </div>
-  </div>
+<button type="button" id="home"><img src="img/command/home.png"></button>
+<button type="button" id="next"><img src="img/command/right.png"></button>
 
-  <div class="sb-box">
-    <div class="icon-img icon-img-right">
-      <img src="img/player2.png"></div>
-    <div class="icon-name icon-name-right">アザラシくん</div>
-    <div class="sb-side sb-side-right">
-      <div class="sb-txt sb-txt-right">ほんとうだ！やりなおしてみるね！</div>
-    </div>
-  </div>
-  
-
-<div id="down1" class="sb-box">
-  <div class="sb-side sb-side-left">
-    <div class="sb-txt sb-txt-left">
-      <div><img src="img/rule04.png" width="500"></div>
-    </div>
-  </div>
-    <div class="icon-img icon-img-left">
-      <img src="img/player.png"></div>
-    <div class="icon-name icon-name-left">シロクマくん</div>
-    <div class="sb-side sb-side-left">
-      <div class="sb-txt sb-txt-left">お！こんどはゴールできた！アザラシくんありがとう！</div>
-    </div>
-</div>
-
-
-    <div class="sb-box">
-      <div class="icon-img icon-img-right">
-        <img src="img/player2.png"></div>
-      <div class="icon-name icon-name-right">アザラシくん</div>
-      <div class="sb-side sb-side-right">
-        <div class="sb-txt sb-txt-right">どういたしまして！</div>
-      </div>
-    </div>
-
-    <div id="down1" class="sb-box">
-      <div class="icon-img icon-img-left">
-        <img src="img/player.png"></div>
-      <div class="icon-name icon-name-left">シロクマくん</div>
-      <div class="sb-side sb-side-left">
-        <div class="sb-txt sb-txt-left">これでルールがわかったね！</div>
-      </div>
-    </div>
-      
-
-<div class="sb-box">
-  <div class="icon-img icon-img-right">
-    <img src="img/player2.png"></div>
-  <div class="icon-name icon-name-right">アザラシくん</div>
-  <div class="sb-side sb-side-right">
-    <div class="sb-txt sb-txt-right">バッチリだよ！</div>
-  </div>
-</div>
-
-<div id="down1" class="sb-box">
-  <div class="icon-img icon-img-left">
-    <img src="img/player.png"></div>
-  <div class="icon-name icon-name-left">シロクマくん</div>
-  <div class="sb-side sb-side-left">
-    <div class="sb-txt sb-txt-left">さいごにもういちどぼくにゴールまでのみちをおしえてみて？</div>
-  </div>
-  <div class="sb-side sb-side-left">
-    <div class="sb-txt sb-txt-left">さっきとはちがうコースでもできるかな？</div>
-  </div>
-</div>
-
-
-<form action="#" name="form1"></form>
-
-		<!-- 各ボタン作成 -->
-		
-		<div><canvas id="canvas"></canvas></div>
-	
-
-		<div>
-			<button type="button" id="right"><img src="img/command/right.png" id="右"></button>
-			<button type="button" id="left"><img src="img/command/left.png" id="左"></button>
-			<button type="button" id="up"><img src="img/command/up.png" id="上"></button>
-			<button type="button" id="down"><img src="img/command/down.png" id="下"></button>
-			<button type="button" id="act"><img src="img/command/action.png"></button>
-			<button type="button" id="again"><img src="img/command/restart.png"></button>
-		</div>
-		<script>
-			// 移動回数カウント
-			var count = 0;
-
-			var line = [];
-			var image = {	
-							"右":"<img src='img/command/right.png' width=3%>", 
-						   	"左":"<img src='img/command/left.png' width=3%>", 
-						   	"上":"<img src='img/command/up.png' width=3%>",
-						   	"下":"<img src='img/command/down.png' width=3%>"
-						}
-			
-
-			// 各ボタンがクリックさせた時の処理
-			document.getElementById("right").onclick = function () {
-				count++;
-				document.getElementById("count").innerHTML = "シロクマくんのうごき：" + count;
-				line.push("右"); //配列に格納
-				console.log(line);
-				document.getElementById("move").innerHTML = "シロクマくんのうごくかず：" + image[line[0]];
-				rewrite();
-			};
-			document.getElementById("left").onclick = function () {
-				count++;
-				document.getElementById("count").innerHTML = "シロクマくんのうごき：" + count;
-				line.push("左");
-				console.log(line);
-				document.getElementById("move").innerHTML = "シロクマくんのうごくかず：" + image[line[0]];
-				rewrite();
-			};
-			document.getElementById("up").onclick = function () {
-				count++;
-				document.getElementById("count").innerHTML = "シロクマくんのうごき：" + count;
-				line.push("上");
-				console.log(line);
-				document.getElementById("move").innerHTML = "シロクマくんのうごくかず：" + image[line[0]];
-				rewrite();
-			};
-			document.getElementById("down").onclick = function () {
-				count++;
-				document.getElementById("count").innerHTML = "シロクマくんのうごき：" + count;
-				line.push("下");
-				console.log(line);
-				document.getElementById("move").innerHTML = "シロクマくんのうごくかず：" + image[line[0]];
-				rewrite();
-			};
-
-			//配列削除（初期化）やり直すボタンクリック時の処理
-			document.getElementById("again").onclick = function () {
-				//移動ボタン表示
-				document.getElementById("right").hidden = false;
-				document.getElementById("left").hidden = false;
-				document.getElementById("up").hidden = false;
-				document.getElementById("down").hidden = false;
-				document.getElementById("act").hidden = false;
-				count = 0; //カウント初期化
-				document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
-				line.length = 0; //配列を空に
-				console.log(line);
-				document.getElementById("move").innerHTML = "シロクマくんのうごき："
-				// プレイヤーをスタート位置へ
-				player.x = 48;
-				player.y = 48;
-				player.move = 0;
-			};
-
-			//移動方向表示p1書き換え
-			function rewrite() {
-				if (line.length > 1) {
-					for (let j = 1; j < line.length; j++) {
-						// document.getElementById("move").innerHTML += "→" + line[j];
-						var url=image[line[j]];
-						document.getElementById("move").innerHTML += url;
-						// document.write("<img src='" + image["line[j]"] +"'>");
-					}
-				}
-			}
-
-
-		</script>
-
-<!-- 表示 -->
-<p1 id=move>シロクマくんのうごき：</p1><br>
-<p2 id=count>シロクマくんのうごくかず：０</p2>
-
-<script type="text/javascript" src="js/findShortestPath.js"></script>
-<script type="text/javascript" src="js/scriptrule.js"></script>
-
-
+<script>
+    document.getElementById("next").onclick = function () {
+        window.location.href = "stage1.html";
+    };
+    document.getElementById("home").onclick = function () {
+        window.location.href = "index.html";
+    };
+</script>
 </body>
 </html>

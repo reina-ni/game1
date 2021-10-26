@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html>
-	
 <head>
-	<meta charset="UTF-8">
-	<title>ぼうけんゲーム</title>
-	<link rel="stylesheet" href="style.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
-	<!-- ビューポートの設定 -->
-	<meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" href="img/player/player.png">
+    <title>シロクマくんのぼうけん</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <style>
@@ -39,102 +37,101 @@
 </style>
 
 <body>
-    <!-- <p id="cleartime">かかったじかん：</p> -->
     <div id="awan">
+        <EMBED src="music/tousen.mp3" autostart="true" hidden="true">
         <div class="float">
             <div class="flex">
                 <p id="clearcountshortest"></p>
-                <img src="img/playerclear01.png" id="clearbear" height="100">
+                <img src="img/player/playerclear01.png" id="clearbear" height="100">
                 <p id="clearcount">いどうかいすう：</p>
+                <p id="notclearcountshortest"></p>
             </div>
         </div>
-            <!-- <button type="button" id="back"><img src="img/command/left.png"></button> -->
+            <p id="icc"></p>
             <button type="button" id="home"><img src="img/command/home.png"></button>
             <button type="button" id="next"><img src="img/command/right.png"></button>
     </div>
    
-    <script>
-        var clearcount = window.localStorage.getItem("clearcount");
-        console.log("移動回数結果："+clearcount);
-        var clearcountshortest = window.localStorage.getItem("clearcountshortest");
-        console.log("最短移動回数："+clearcountshortest);
-       
-        if (clearcount == clearcountshortest) {
-            document.getElementById("clearcountshortest").innerHTML = "さいたんいどうでクリア！";
-            console.log('最短移動でクリア');//確認
-        }
+<script>
+    var clearcount = window.localStorage.getItem("clearcount");
+    console.log("移動回数結果："+clearcount);
+    var clearcountshortest = window.localStorage.getItem("clearcountshortest");
+    console.log("最短移動回数："+clearcountshortest);
+    
+    if (clearcount == clearcountshortest) {
+        document.getElementById("clearcountshortest").innerHTML = "さいたんいどうでクリア！";
+        console.log('最短移動でクリア');
+    }else{
+        document.getElementById("notclearcountshortest").innerHTML = "つぎはさいたんをめざそう！";
+    }
 
-        var filename = window.localStorage.getItem("filename");//次のhtml受け取り（前頁のコードに記載）
-        console.log("次ステージ："+filename);
-        document.getElementById("clearcount").innerHTML = "いどうかいすう：" + clearcount + "かい";
+    var filename = window.localStorage.getItem("filename");
+    console.log("次ステージ："+filename);
+    document.getElementById("clearcount").innerHTML = "いどうかいすう：" + clearcount + "かい";
 
+    //stage1で最短クリア二回出来たらstage2へ
+    var shortest_check = window.localStorage.getItem("shortest_check");
 
-        //stage1で最短クリア二回出来たらstage2へ
-        var shortest_check = window.localStorage.getItem("shortest_check");
+    console.log(shortest_check);
+    if(shortest_check == 11){//文字列で受け渡しされてしまうため11(回数分並べる)
+        filename = "stage2_1.html";
+        console.log("次ステージ変更："+filename);
+        shortest_check = 1;//各stageの最後のページにもこの数をセット
+    }
+    
+    if(shortest_check == 13){//3の個数がstage3の最短クリア回数(1は前の記録)
+        filename = "stage3_last.html";
+        console.log("次ステージ変更："+filename);
+        shortest_check = 3;
+    }
 
-        console.log(shortest_check);
-        if(shortest_check == 11){//文字列で受け渡しされてしまうため11(回数分並べる)
-            filename = "stage2_1.html";
-            console.log("次ステージ変更："+filename);
-            shortest_check = 1;//各stageの最後のページにもこの数をセット
-        }
-        if(shortest_check == 13){//3の個数がstage3の最短クリア回数(1は前の記録)
-            filename = "stage3_last.html";
-            console.log("次ステージ変更："+filename);
-            shortest_check = 3;
-        }
-        if(shortest_check == 344){//4の個数がstage4の最短クリア回数(3は前の記録)
-            filename = "stage5.html";
-            console.log("次ステージ変更："+filename);
-            shortest_check = 4;
-        }
-        if(shortest_check == 45){//5の個数がstage5の最短クリア回数(4は前の記録)
-            filename = "stage5_last.html";
-            console.log("次ステージ変更："+filename);
-            shortest_check = 5;
-        }
-        if(shortest_check == 566){//6の個数がstage6の最短クリア回数(5は前の記録)
-            filename = "stage7.html";
-            console.log("次ステージ変更："+filename);
-            shortest_check = 6;
-        }
-        if(shortest_check == 67){//7の個数がstage7の最短クリア回数(6は前の記録)
-            filename = "stage7_last.html";
-            console.log("次ステージ変更："+filename);
-            shortest_check = 7;
-        }
-        if(shortest_check == 788){//8の個数がstage8の最短クリア回数(7は前の記録)
-            filename = "stage9.html";
-            console.log("次ステージ変更："+filename);
-            shortest_check = 8;
-        }
-        if(shortest_check == 899){//9の個数がstage9の最短クリア回数(8は前の記録)
-            filename = "stage10.html";
-            console.log("次ステージ変更："+filename);
-            shortest_check = 9;
-        }
-        if(shortest_check == 10){
-            //クリア画面あざらしくんに変更
-            var img = document.getElementById('clearbear');
-            clearbear.setAttribute('src', 'img/playerclear03.png');
-            filename = "bossstage.html";
-            console.log("次ステージ変更："+filename);
-            shortest_check = 0;
-        }
-        window.localStorage.setItem("shortest_check",shortest_check);
+    if(shortest_check == 34){//4の個数がstage4の最短クリア回数(3は前の記録)
+        filename = "stage5.html";
+        console.log("次ステージ変更："+filename);
+        shortest_check = 4;
+    }
+    if(shortest_check == 45){//5の個数がstage5の最短クリア回数(4は前の記録)
+        filename = "stage5_last.html";
+        console.log("次ステージ変更："+filename);
+        shortest_check = 5;
+    }
+    if(shortest_check == 56){//6の個数がstage6の最短クリア回数(5は前の記録)
+        filename = "stage7.html";
+        console.log("次ステージ変更："+filename);
+        shortest_check = 6;
+    }
+    if(shortest_check == 67){//7の個数がstage7の最短クリア回数(6は前の記録)
+        filename = "stage7_last.html";
+        console.log("次ステージ変更："+filename);
+        shortest_check = 7;
+    }
+    if(shortest_check == 78){//8の個数がstage8の最短クリア回数(7は前の記録)
+        filename = "stage9.html";
+        console.log("次ステージ変更："+filename);
+        shortest_check = 8;
+    }
+    if(shortest_check == 89){//9の個数がstage9の最短クリア回数(8は前の記録)
+        filename = "stage10.html";
+        console.log("次ステージ変更："+filename);
+        shortest_check = 9;
+    }
+    if(shortest_check == 10){//クリア画面あざらしくんに変更
+        var img = document.getElementById('clearbear');
+        clearbear.setAttribute('src', 'img/player/playerclear03.png');
+        document.getElementById("icc").innerHTML = "アザラシくんがアイスクリームコーンをくれたよ！"
+        filename = "gamerule5.html";
+        console.log("次ステージ変更："+filename);
+        shortest_check = 0;
+    }
+    window.localStorage.setItem("shortest_check",shortest_check);
 
-
-        document.getElementById("next").onclick = function () {
-            window.location.href = filename;
-        };
-        document.getElementById("home").onclick = function () {
-            window.location.href = "index.html";
-        };
-        // document.getElementById("back").onclick = function () {
-        //     // window.location.href = "play.html";
-        //     history.back();
-        // };
-    </script>
+    document.getElementById("next").onclick = function () {
+        window.location.href = filename;
+    };
+    document.getElementById("home").onclick = function () {
+        window.location.href = "index.html";
+    };
+</script>
 
 </body>
 </html>

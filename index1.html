@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="img/player/player.png">
+  <title>シロクマくんのぼうけん</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- ビューポートの設定 -->
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<style>
+  h1{
+    font-size: 30px;
+    margin-top: 0px;
+  }
+
+  #st,#btn,#start{
+    font-family: 'Hachi Maru Pop';
+  }
+
+	div{
+		text-align: center;
+		background-color: none;
+	}
+
+  img{
+    text-align: center;
+    padding-top: 5%;
+    background-color: none;
+  }
+</style>
+
+  <body>
+    <div id="awan">
+      <img src="img/other/logo.png">
+        <h1>シロクマくんのぼうけん</h1>
+          <!-- <button id=st>ストーリー</button> -->
+          <button id=btn>ボスステージ</button>
+          <button id=start>はじめから</button>
+    </div>
+
+    <script>
+      // document.getElementById("st").onclick = function () {
+      //   window.location.href = "story.html";
+      // };
+      document.getElementById("btn").onclick = function () {
+        window.location.href = "bossstage.html";
+      };
+      document.getElementById("start").onclick = function () {
+        window.location.href = "stage1.html";
+      };
+    </script>
+
+  </body>
+</html>
