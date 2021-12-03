@@ -1,96 +1,97 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="icon" href="img/player/player.png">
-    <title>シロクマくんのぼうけん</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
-    <!--レイアウト制御用独自CSS-->
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1">
+   <link rel="icon" href="img/player/player.png">
+   <title>シロクマくんのぼうけん</title>
+   <link rel="stylesheet" href="style.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <!--レイアウト制御用独自CSS-->
    <link rel="stylesheet" type="text/css" href="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-8/css/reset.css">
    <link rel="stylesheet" type="text/css" href="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-8/css/5-8.css">
 </head>
-
+ 
 <style>
-    * { background:#a5ccdf}
-    p{
-        margin-top: 5%;
-        margin-left: none;
-    }
-    button{
-        text-align: center;
-        margin-top: 2%;
-    }
-    .flex{
-        display: flex;
-        justify-content: center;
-        margin-top: 10%;
-    }
-    .float {
-        animation: float_2979 3s linear infinite;
-        transform-origin: 50% 50%;
-    }
-    @keyframes float_2979 {
-        0% { transform: translateY(0) }
-        33.33333% { transform: translateY(-6px) }
-        66.66667% { transform: translateY(0) }
-        100% { transform: translateY(0) }
-    }
+   * { background:#a5ccdf}
+   p{
+       margin-top: 5%;
+       margin-left: none;
+   }
+   button{
+       text-align: center;
+       margin-top: 2%;
+   }
+   .flex{
+       display: flex;
+       justify-content: center;
+       margin-top: 10%;
+   }
+   .float {
+       animation: float_2979 3s linear infinite;
+       transform-origin: 50% 50%;
+   }
+   @keyframes float_2979 {
+       0% { transform: translateY(0) }
+       33.33333% { transform: translateY(-6px) }
+       66.66667% { transform: translateY(0) }
+       100% { transform: translateY(0) }
+   }
+   html,body{
+       height: 100%;/*描画エリアの為*/
+   }
+   #wrapper{
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       text-align:center;
+   }
 </style>
-
+ 
 <body>
-    <div id="wrapper">
-        <div id="awan">
-            <!-- <EMBED src="music/tousen.mp3" autostart="true" hidden="true"> -->
-                <audio autoplay id="audio">
-                    <source src="music/tousen.mp3">
-                  </audio>
-      
-            <div id="particles-js"></div>
-            <!--/wrapper-->
-            <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-            <script src="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-8/js/5-8.js"></script>
-        <div class="float">
-            <div class="flex">
-                <p id="clearcountshortest"></p>
-                <img src="img/player/playerclear01.png" height="100" id="chara">
-                <p>ボスをたおしたよ！
-                    <br>いっしょにぼうけんしてくれてありがとう！
-                </p>
-                <img src="img/player/playerclear03.png" height="100">
-            </div>
-        </div>
-            <!-- <p>アンケートの回答にご協力よろしくお願い致します！→→→
-            <a href="https://forms.gle/Jzx8rZAAcxZrfXWh9">アンケート</a></p> -->
-            <button type="button" id="home"><img src="img/command/home.png"></button>
-    </div>
-</div>
-   
+   <div id="wrapper">
+   <div id="awan">
+       <EMBED src="music/tousen.mp3" autostart="true" hidden="true">
+ 
+       <div id="particles-js"></div>
+       <!--/wrapper-->
+       <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+       <script src="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-8/js/5-8.js"></script>
+ 
+       <div class="float">
+           <div class="flex">
+               <p id="clearcountshortest"></p>
+               <img src="img/player/playerclear01.png" height="100">
+               <p>ボスステージクリア！
+                   <br>おつかれさまでした！
+               </p>
+               <img src="img/player/playerclear03.png" height="100">
+           </div>
+       </div>
+           <!-- <p>アンケートの回答にご協力よろしくお願い致します！→→→
+           <a href="https://forms.gle/Jzx8rZAAcxZrfXWh9">アンケート</a></p> -->
+           <button type="button" id="home"><img src="img/command/home.png"></button>
+   </div>
+   </div>
+ 
+ 
 <script>
-    var character = window.localStorage.getItem("character");
-    var character_name = window.localStorage.getItem("character_name");
-
-    document.getElementById("chara").src="img/player/character_"+character_name+".png";
-
-    
-    // var clearcount = window.localStorage.getItem("clearcount");
-    // console.log("移動回数結果："+clearcount);
-    // var clearcountshortest = window.localStorage.getItem("clearcountshortest");
-    // console.log("最短移動回数："+clearcountshortest);
-
-    // var filename = window.localStorage.getItem("filename");
-    // console.log("次ステージ："+filename);
-
-    // var shortest_check = window.localStorage.getItem("shortest_check");
-
-    // console.log(shortest_check);
-
-    document.getElementById("home").onclick = function () {
-        window.location.href = "index1.html";
-    };
+   var clearcount = window.localStorage.getItem("clearcount");
+   console.log("移動回数結果："+clearcount);
+   var clearcountshortest = window.localStorage.getItem("clearcountshortest");
+   console.log("最短移動回数："+clearcountshortest);
+ 
+   var filename = window.localStorage.getItem("filename");
+   console.log("次ステージ："+filename);
+ 
+   var shortest_check = window.localStorage.getItem("shortest_check");
+ 
+   console.log(shortest_check);
+ 
+   document.getElementById("home").onclick = function () {
+       window.location.href = "index1.html";
+   };
 </script>
-
+ 
 </body>
 </html>
