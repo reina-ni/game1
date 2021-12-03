@@ -7,6 +7,10 @@
     <title>シロクマくんのぼうけん</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
+    <!--レイアウト制御用独自CSS-->
+   <link rel="stylesheet" type="text/css" href="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-8/css/reset.css">
+   <link rel="stylesheet" type="text/css" href="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-8/css/5-8.css">
 </head>
 
 <style>
@@ -37,36 +41,51 @@
 </style>
 
 <body>
-    <div id="awan">
+    <div id="wrapper">
+        <div id="awan">
+            <!-- <EMBED src="music/tousen.mp3" autostart="true" hidden="true"> -->
+                <audio autoplay id="audio">
+                    <source src="music/tousen.mp3">
+                  </audio>
+      
+            <div id="particles-js"></div>
+            <!--/wrapper-->
+            <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+            <script src="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-8/js/5-8.js"></script>
         <div class="float">
             <div class="flex">
                 <p id="clearcountshortest"></p>
-                <img src="img/player/playerclear01.png" height="100">
-                <p>ボスステージクリア！
-                    <br>おつかれさまでした！
+                <img src="img/player/playerclear01.png" height="100" id="chara">
+                <p>ボスをたおしたよ！
+                    <br>いっしょにぼうけんしてくれてありがとう！
                 </p>
                 <img src="img/player/playerclear03.png" height="100">
             </div>
         </div>
-            <p>アンケートの回答にご協力よろしくお願い致します！→→→
-            <a href="https://forms.gle/Jzx8rZAAcxZrfXWh9">アンケート</a></p>
+            <!-- <p>アンケートの回答にご協力よろしくお願い致します！→→→
+            <a href="https://forms.gle/Jzx8rZAAcxZrfXWh9">アンケート</a></p> -->
             <button type="button" id="home"><img src="img/command/home.png"></button>
     </div>
-
+</div>
    
 <script>
+    var character = window.localStorage.getItem("character");
+    var character_name = window.localStorage.getItem("character_name");
 
-    var clearcount = window.localStorage.getItem("clearcount");
-    console.log("移動回数結果："+clearcount);
-    var clearcountshortest = window.localStorage.getItem("clearcountshortest");
-    console.log("最短移動回数："+clearcountshortest);
+    document.getElementById("chara").src="img/player/character_"+character_name+".png";
 
-    var filename = window.localStorage.getItem("filename");
-    console.log("次ステージ："+filename);
+    
+    // var clearcount = window.localStorage.getItem("clearcount");
+    // console.log("移動回数結果："+clearcount);
+    // var clearcountshortest = window.localStorage.getItem("clearcountshortest");
+    // console.log("最短移動回数："+clearcountshortest);
 
-    var shortest_check = window.localStorage.getItem("shortest_check");
+    // var filename = window.localStorage.getItem("filename");
+    // console.log("次ステージ："+filename);
 
-    console.log(shortest_check);
+    // var shortest_check = window.localStorage.getItem("shortest_check");
+
+    // console.log(shortest_check);
 
     document.getElementById("home").onclick = function () {
         window.location.href = "index1.html";
