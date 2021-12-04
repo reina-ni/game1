@@ -131,7 +131,7 @@ button{
     <source src="music/natsuyasuminotanken.mp3">
   </audio>
   
-  <h2>いっしょにぼうけんにするシロクマくんをえらぼう！</h2>
+  <h2>いっしょにぼうけんにするシロクマくんをタッチしてえらぼう！</h2>
   
   <ul class="slider">
     <!-- <div class="selection-group"> -->
@@ -159,8 +159,15 @@ button{
 </div>
 
 <script>
+  document.getElementById("start").hidden = true;
   var character="img/player/player.png";//初期設定
   var character_name="player";
+
+  document.getElementsByName("bear").forEach(
+    r => r.addEventListener("change" ,//ラジオボタンクリックではじめるボタン表示
+        e =>document.getElementById("start").hidden = false
+    )
+  );
 
   function setchara(setcharacter){//キャラを選択した時の処理
     character=setcharacter;
