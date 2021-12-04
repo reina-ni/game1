@@ -10,6 +10,64 @@
 </head>
 
 <style>
+    .leaves-container {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    overflow: auto;
+    }
+    
+    .leaf {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    animation: animate-leaf 8s linear;
+    }
+    
+    /* player */
+    .leaf-1 {
+    background-image: url('img/other/snow.png');
+    background-color:rgba(0,0,0,0);
+    }
+    /* player3 */
+    .leaf-2 {
+    background-image: url('img/other/heart.png');
+    background-color:rgba(0,0,0,0);
+    }
+    /* player4 */
+    .leaf-3 {
+    background-image: url('img/other/leaf.png');
+    background-color:rgba(0,0,0,0);
+    }
+    /* player5 */
+    .leaf-4 {
+    background-image: url('img/other/darkblue.png');
+    background-color:rgba(0,0,0,0);
+    }
+    
+    @keyframes animate-leaf {
+    0% {
+    opacity: 0;
+    top: 0;
+    transform: rotate(0);
+    }
+    
+    10% {
+    opacity: 1;
+    }
+    
+    90% {
+    opacity: 1;
+    }
+    
+    100% {
+    opacity: 0;
+    top: 100vh;
+    transform: rotate(1080deg);
+    }
+    }
+
     * { background:#a5ccdf}
     p{
         margin-top: 5%;
@@ -34,10 +92,14 @@
         66.66667% { transform: translateY(0) }
         100% { transform: translateY(0) }
     }
+    html,body{
+      height: 100%;/*描画エリアの為*/
+  }
+
 </style>
 
 <body>
-    <div id="wrapper">
+    <div class="leaves-container"></div>
         <div id="awan" ontouchstart="">
             <!-- <EMBED src="music/tousen.mp3" autostart="true" hidden="true"> -->
                 <audio autoplay id="audio">
@@ -57,13 +119,14 @@
             <a href="https://forms.gle/Jzx8rZAAcxZrfXWh9">アンケート</a></p> -->
             <button type="button" id="home"><img src="img/command/home.png"></button>
         </div>
-    </div>
    
 <script>
     var character = window.localStorage.getItem("character");
     var character_name = window.localStorage.getItem("character_name");
 
     document.getElementById("chara").src="img/player/character_"+character_name+".png";
+
+   
 
     
     // var clearcount = window.localStorage.getItem("clearcount");
@@ -82,6 +145,39 @@
         window.location.href = "index1.html";
     };
 </script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', ()=> {
+     
+     const container = document.querySelector('.leaves-container');
+     
+     const createLeaf = (leafClass, minSizeVal, maxSizeVal) => {
+       const leafEl = document.createElement('span');
+       leafEl.className = `leaf ${leafClass}`;
+       const minSize = minSizeVal;
+       const maxSize = maxSizeVal;
+       const size = Math.random() * (maxSize + 1 - minSize) + minSize;
+       leafEl.style.width = `${size}px`;
+       leafEl.style.height = `${size}px`;
+       leafEl.style.left = Math.random() * 100 + '%';
+       container.appendChild(leafEl);
+     
+       setTimeout(() => {
+         leafEl.remove();
+       }, 8000);
+     }
+    if(character_name=="player"){
+        setInterval(createLeaf.bind(this, 'leaf-1', 30, 50), 500);
+    }else if(character_name=="player3"){
+        setInterval(createLeaf.bind(this, 'leaf-2', 30, 50), 500);
+    }else if(character_name=="player4"){
+        setInterval(createLeaf.bind(this, 'leaf-3', 30, 50), 500);
+    }else if(character_name=="player5"){
+        setInterval(createLeaf.bind(this, 'leaf-4', 30, 50), 500);
+    }
+    });
+    </script>
+    
 
 </body>
 </html>
