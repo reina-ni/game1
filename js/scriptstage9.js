@@ -6,7 +6,9 @@ var ctx = canvas.getContext( '2d' );
  
 var player = new Object();
 player.img = new Image();
-player.img.src = 'img/player/player.png';
+var character = window.localStorage.getItem("character");
+var character_name = window.localStorage.getItem("character_name");
+player.img.src = character;
 player.x = 48;
 player.y = 48;
 player.move = 0;
@@ -22,6 +24,7 @@ btn.left = false;
 btn.push = '';
 
 var pub2_count=0;//ヒント表示・非表示用
+var hint_count=0;
 
 a_enemy=[];
 b_enemy=[];
@@ -416,16 +419,39 @@ function main(i) {
 		console.log(pathresult_ans);//最終結果表示
 		get_enemy();//火が消えてしまうため
 
-		hint_ans=[];//穴埋め問題用配列
-		for(var l=0;l<pathresult_ans.length;l++){
-			var ram = Math.floor( Math.random() * 2 );
-			if(ram===0){
-				hint_ans.push(image[pathresult_ans[l]]);
+		var image = { "右":"<img src='img/command/right.png' width=6%>", 
+				"左":"<img src='img/command/left.png' width=6%>", 
+				"上":"<img src='img/command/up.png' width=6%>",
+				"下":"<img src='img/command/down.png' width=6%>",
+				"攻撃":"<img src='img/command/attack.png' width=6%>",
+				"攻撃2":"<img src='img/command/attack2.png' width=6%>",
+				"攻撃3":"<img src='img/command/attack3.png' width=6%>"}
+		hint_count++;
+		hint_ans=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];//穴埋め問題用配列
+		hint_ans_result=[];//画像push用配列
+		hint_ans.length=pathresult_ans.length
+		for(var a=0;a<hint_ans.length/2;a++){//半分を1に変える
+			hint_ans[a]=1;
+		}
+		hint_ans = hint_ans.map(function(a){return [a, Math.random()]})//要素シャッフル
+			.sort(function(a, b){return a[1] - b[1]})
+			.map(function(a){return a[0]});
+		for(var l=0;l<hint_ans.length;l++){//1だったら？ボックス
+			if(hint_ans[l]===0){
+				hint_ans_result.push(image[pathresult_ans[l]]);
 			}else{
-				hint_ans.push("<img src='img/command/Q.png' width=3%>");//穴埋め部分
+				hint_ans_result.push("<img src='img/command/Q.png' width=6%>");//穴埋め部分
+			}
+			if(l==9 || l==19 || l==29){ //答え表示に改行をつける処理
+				hint_ans_result[hint_ans_result.length-1]+="<br>";
 			}
 		}
-		document.getElementById("hint").innerHTML = hint_ans;
+		if(hint_count===1){//初めの一回のみヒントに反映させる
+			console.log(hint_ans);
+			hint_ans_result_=hint_ans_result;
+			hint_ans_result_ = hint_ans_result_.join(' ');
+		}
+		document.getElementById("hint").innerHTML = hint_ans_result_;
 		if(pub2_count%2==0){//再度押したら非表示
 			document.getElementById("hint").innerHTML = "";
 		}
@@ -450,8 +476,8 @@ function go(i) {
 		window.setTimeout(function(){
 			document.getElementById("again_data").hidden=false;
 			console.log("再チャレンジ表示");
-			player.img.src = 'img/player/player.png';//しろくまくん元に戻す
-			document.getElementById("comment").innerHTML = "<span class='under1'>もういちどかんがえてみよう！</span>";
+			player.img.src = character;//しろくまくん元に戻す
+			document.getElementById("comment").innerHTML = "<span class='under1'>もう<ruby>一度<rt>いちど</rt></ruby><ruby>考<rt>かんが</rt></ruby>えてみよう！</span>";
 		}, 600);
 	}
 }
@@ -472,25 +498,24 @@ document.getElementById("act").onclick = function() {
 		for (let i=0; i<line.length; i++) {
 			window.setTimeout(function(){
 				if(line[i]=="攻撃"){//しろくまにバケツ持たせる処理
-					player.img.src = 'img/player/player_attack.png';
+					player.img.src = 'img/player/'+character_name+'_attack.png';
 				}else if(line[i]=="攻撃2"){
-					player.img.src = 'img/player/player_attack2.png';
+					player.img.src = 'img/player/'+character_name+'_attack2.png';
 				}else if(line[i]=="攻撃3"){
-					player.img.src = 'img/player/player_attack3.png';
+					player.img.src = 'img/player/'+character_name+'_attack3.png';
 				}else{
-					player.img.src = 'img/player/player.png';
+					player.img.src = character;
 				}
 				go(i);
 				main(i);
+				document.getElementById(i).style.backgroundColor="rgba(119, 160, 207)";
 			}, 500*i);
 		}
 	}else{
 		console.log("動きを命令してないよ");
-		document.getElementById("comment").innerHTML = "<span class='under1'>しろくまくんにうごきをおしえよう！<span>";
+		document.getElementById("comment").innerHTML = "<span class='under1'>シロクマくんに<ruby>動<rt>うご</rt></ruby>きを<ruby>教<rt>おし</rt></ruby>えよう！<span>";
 		window.setTimeout(function(){
-			document.getElementById("comment").innerHTML = "<p id=comment><span class='under'>シロクマくんを１ばんすくない<ruby>数<rt>かず</rt></ruby>でゴールまでうごかそう！</span></p>";
+			document.getElementById("comment").innerHTML = "<p id=comment><span class='under'>シロクマくんを１<ruby>番<rt>ばん</rt></ruby><ruby>少<rt>すく</rt></ruby>ない<ruby>数<rt>かず</rt></ruby>でゴールまで<ruby>動<rt>うご</rt></ruby>かそう！</span></p>";
 		}, 2000);
 	}
 };
-
-

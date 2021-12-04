@@ -6,7 +6,9 @@ var ctx = canvas.getContext( '2d' );
  
 var player = new Object();
 player.img = new Image();
-player.img.src = 'img/player/player.png';
+var character = window.localStorage.getItem("character");
+var character_name = window.localStorage.getItem("character_name");
+player.img.src = character;
 player.x = 48;
 player.y = 48;
 player.move = 0;
@@ -567,8 +569,7 @@ function main(i) {
 	
 
 		//ゴール後の処理
-		function stop(){
-			
+		function stop(){			
 			// player.move = 32; //clear.htmlにすぐ移動するならいらない
 			line.length = 0; //配列を空に
 			
@@ -635,16 +636,14 @@ function go(i) {
 	if( line[i]=="右" ) btn.right = true;
 	if( line[i]=="下" ) btn.down = true;
 	if( line[i]=="攻撃" ) btn.attack = true;
-    // if( line[i]=="攻撃2" ) btn.attack2 = true;
-	// if( line[i]=="攻撃3" ) btn.attack3 = true;
 	
 	if(i===line.length-1){//for文最後の実行時に実行（再チャレンジ表示）
 		//移動終わったら表示
 		window.setTimeout(function(){
 			document.getElementById("again_data").hidden=false;
 			console.log("再チャレンジ表示");
-			player.img.src = 'img/player/player.png';//しろくまくん元に戻す
-			document.getElementById("comment").innerHTML = "<span class='under'>もういちどかんがえてみよう！</span>";
+			player.img.src = character;//しろくまくん元に戻す
+			document.getElementById("comment").innerHTML = "<span class='under3'>もう<ruby>一度<rt>いちど</rt></ruby><ruby>考<rt>かんが</rt></ruby>えてみよう！</span>";
 		}, 600);
 	}
 }
@@ -660,8 +659,6 @@ document.getElementById("act").onclick = function() {
 		document.getElementById("down").hidden=true;
 		document.getElementById("act").hidden=true;
 		document.getElementById("attack").hidden=true;
-		// document.getElementById("attack2").hidden=true;
-		// document.getElementById("attack3").hidden=true;
 		document.getElementById("del").hidden=true;
 		document.getElementById("again").hidden=true;
 
@@ -670,20 +667,20 @@ document.getElementById("act").onclick = function() {
 			//0.5秒おきに移動
 			window.setTimeout(function(){
 				if(line[i]=="攻撃"){//しろくまにコーン持たせる処理
-					player.img.src = 'img/player/player_icc.png';
+					player.img.src = 'img/player/'+character_name+'_icc.png';
 				}else{
-					player.img.src = 'img/player/player.png';
+					player.img.src = character;
 				}
 				go(i);
 				main(i);
+				document.getElementById(i).style.backgroundColor="rgba(255, 112, 97)";
 			}, 500*i);
 		}
 	}else{
 		console.log("動きを命令してないよ");
-		document.getElementById("comment").innerHTML = "<span class='under'>しろくまくんにうごきをおしえよう！<span>";
+		document.getElementById("comment").innerHTML = "<span class='under3'>シロクマくんに<ruby>動<rt>うご</rt></ruby>きを<ruby>教<rt>おし</rt></ruby>えよう！<span>";
 		window.setTimeout(function(){
-			document.getElementById("comment").innerHTML = "";
+			document.getElementById("comment").innerHTML ="<p id=comment><span class='under'>シロクマくんを１<ruby>番<rt>ばん</rt></ruby><ruby>少<rt>すく</rt></ruby>ない<ruby>数<rt>かず</rt></ruby>で<ruby>動<rt>うご</rt></ruby>かしてアイスを<ruby>集<rt>あつ</rt></ruby>めよう！</span></p>";
 		}, 2000);
 	}
 };
-

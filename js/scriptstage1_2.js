@@ -6,7 +6,8 @@ var ctx = canvas.getContext( '2d' );
 
 var player = new Object();
 player.img = new Image();
-player.img.src = 'img/player/player.png';
+var character = window.localStorage.getItem("character");
+player.img.src = character;
 player.x = 48;
 player.y = 48;
 player.move = 0;
@@ -151,7 +152,7 @@ function main(i) {
 			var clearcountshortest;
 			window.localStorage.setItem("clearcountshortest",shortest_count);
 
-			var shortest_check = 1;
+			var shortest_check = "01";
 
 			window.localStorage.setItem("shortest_check",shortest_check);
 
@@ -193,7 +194,7 @@ function go(i) {
 		window.setTimeout(function(){
 			document.getElementById("again_data").hidden=false;
 			console.log("再チャレンジ表示");
-			document.getElementById("comment").innerHTML = "<span class='under1'>もういちどかんがえてみよう！</span>";
+			document.getElementById("comment").innerHTML = "<span class='under1'>もう<ruby>一度<rt>いちど</rt></ruby><ruby>考<rt>かんが</rt></ruby>えてみよう！</span>";
 		}, 600);
 	}
 }
@@ -212,13 +213,14 @@ document.getElementById("act").onclick = function() {
 			window.setTimeout(function(){
 				go(i);
 				main(i);
+				document.getElementById(i).style.backgroundColor="rgba(119, 160, 207)";
 			}, 500*i);
 		}
 	}else{
 		console.log("動きを命令してないよ");
-		document.getElementById("comment").innerHTML = "<span class='under1'>しろくまくんにうごきをおしえよう！<span>";
+		document.getElementById("comment").innerHTML = "<span class='under1'>シロクマくんに<ruby>動<rt>うご</rt></ruby>きを<ruby>教<rt>おし</rt></ruby>えよう！<span>";
 		window.setTimeout(function(){
-			document.getElementById("comment").innerHTML = "<p id=comment><span class='under'>シロクマくんを１ばんすくない<ruby>数<rt>かず</rt></ruby>でゴールまでうごかそう！</span></p>";
+			document.getElementById("comment").innerHTML = "<p id=comment><span class='under'>シロクマくんを１<ruby>番<rt>ばん</rt></ruby><ruby>少<rt>すく</rt></ruby>ない<ruby>数<rt>かず</rt></ruby>でゴールまで<ruby>動<rt>うご</rt></ruby>かそう！</span></p>";
 		}, 2000);
 	}
 };

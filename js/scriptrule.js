@@ -133,15 +133,9 @@ function main(i) {
 
 		//ゴール後の処理
 		function stop(){
-			// console.log("経過時間："+datet);
-			// clearTimeout(timer1);
-			// player.move = 32; //clear.htmlにすぐ移動するならいらない
 			line.length = 0; //配列を空に
-			
 
 			//clear.htmlにクリア情報受け渡し
-			// var cleartime;
-			// window.localStorage.setItem("cleartime",datet);
 			var clearcount;
 			window.localStorage.setItem("clearcount",count);
 			var clearcountshortest;
@@ -156,11 +150,6 @@ function main(i) {
 			}, 1000);
 		}
 	}
-
-
-	// if (player.move > 0) {
-	// }
-
 	
 	movement();
 	function movement(){

@@ -1,12 +1,13 @@
 var canvas = document.getElementById( 'canvas' );
-canvas.width = 432;
-canvas.height = 192;
+canvas.width = 528;
+canvas.height = 240;
 
 var ctx = canvas.getContext( '2d' );
- 
+
 var player = new Object();
 player.img = new Image();
-player.img.src = 'img/player/player.png';
+var character = window.localStorage.getItem("character");
+player.img.src = character;
 player.x = 48;
 player.y = 48;
 player.move = 0;
@@ -23,16 +24,62 @@ btn.attack = false;
 btn.push = '';
 
 var map = [
-	[1, 1, 1, 1, 1, 1, 1, 1 ,1 ],
-	[1, 0, 0, 0, 0, 0, 0, 0 ,1 ],
-	[1, 0, 1, 0, 1, 0, 1, 0 ,1 ],
-	[1, 1, 1, 1, 1, 1, 1, 1 ,1 ]
+	[1, 1, 1, 1, 1, 1, 1, 1 ,1 ,1, 1 ],
+	[1, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 1 ],
+	[1, 0, 1, 0, 1, 0, 1, 0 ,1 ,0, 1 ],
+	[1, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 1 ],
+    [1, 1, 1, 1, 1, 1, 1, 1 ,1 ,1, 1 ]
 ]
 
 var h = map.length;
 var w = map[0].length;
-var h_goal = 2;
-var w_goal = 7;
+var h_goal =2;
+var w_goal =8;
+
+for(var a=2;a<4;a+=2){
+    for(var b=2;b<map[0].length-1;b+=2){
+		if(map[a][b-1]==1){
+			map[a+1][b]=Math.floor( Math.random() * 2 );
+			if(map[a+1][b]==0){
+				map[a][b+1]=Math.floor( Math.random() * 2 );
+				if(map[a+1][b]==0 && map[a][b+1]==0){
+					map[a][b-1]=1;
+				}
+			}
+			
+		}else{
+		map[a-1][b]=Math.floor( Math.random() * 2 );
+			if(map[a-1][b]==0){
+				map[a][b-1]=Math.floor( Math.random() * 2 );
+				if(map[a][b-1]==0){
+					map[a+1][b]=Math.floor( Math.random() * 2 );
+					if(map[a+1][b]==0){
+						map[a][b+1]=1;
+					}
+				}
+			}
+		}
+    }
+}
+
+for(var a=4;a<map.length-1;a+=2){
+    for(var b=2;b<map[0].length-1;b+=2){
+		if(map[a][b-1]==1){
+			map[a+1][b]=Math.floor( Math.random() * 2 );
+			if(map[a+1][b]==0){
+				map[a][b+1]=1;
+			}
+		}else{
+		map[a][b-1]=Math.floor( Math.random() * 2 );
+			if(map[a][b-1]==0){
+				map[a+1][b]=Math.floor( Math.random() * 2 );
+			}
+			if(map[a+1][b]==0 && map[a][b-1]==0){
+				map[a][b+1]=1;
+			}
+		}
+	}
+}
 
 var pathresult = pathfinding();
 
@@ -130,7 +177,8 @@ function main(i) {
 				}else if( map[y-1][x] === 3){
 					map[y-1][x]=0;
 					btn.push = 'attack';
-				}	
+				}
+			
 		}
 		btn.left = false;
 		btn.up = false;
@@ -139,11 +187,18 @@ function main(i) {
 		btn.attack = false;
 
 		function stop(){
-			line.length = 0; 
+			line.length = 0;
 			var clearcount;
 			window.localStorage.setItem("clearcount",count);
 			var clearcountshortest;
 			window.localStorage.setItem("clearcountshortest",shortest_count);
+
+			var shortest_check = window.localStorage.getItem("shortest_check");
+			if(count == shortest_count){
+				shortest_check += 2;
+				console.log(shortest_check);
+			}
+			window.localStorage.setItem("shortest_check",shortest_check);
 
 			var filename="stage2_2.html";
 			window.localStorage.setItem("filename",filename);
@@ -153,7 +208,6 @@ function main(i) {
 			}, 500);
 		}
 	}
-
 	movement();
 	function movement(){
 		for (let k=0; player.move>0; k++) {
@@ -183,7 +237,7 @@ function go(i) {
 		window.setTimeout(function(){
 			document.getElementById("again_data").hidden=false;
 			console.log("再チャレンジ表示");
-			document.getElementById("comment").innerHTML = "<span class='under1'>もういちどかんがえてみよう！</span>";
+			document.getElementById("comment").innerHTML = "<span class='under1'>もう<ruby>一度<rt>いちど</rt></ruby><ruby>考<rt>かんが</rt></ruby>えてみよう！</span>";
 		}, 600);
 	}
 }
@@ -202,13 +256,14 @@ document.getElementById("act").onclick = function() {
 			window.setTimeout(function(){
 				go(i);
 				main(i);
+				document.getElementById(i).style.backgroundColor="rgba(119, 160, 207)";
 			}, 500*i);
 		}
 	}else{
 		console.log("動きを命令してないよ");
-		document.getElementById("comment").innerHTML = "<span class='under1'>しろくまくんにうごきをおしえよう！<span>";
+		document.getElementById("comment").innerHTML = "<span class='under1'>シロクマくんに<ruby>動<rt>うご</rt></ruby>きを<ruby>教<rt>おし</rt></ruby>えよう！<span>";
 		window.setTimeout(function(){
-			document.getElementById("comment").innerHTML = "<p id=comment><span class='under'>シロクマくんを１ばんすくない<ruby>数<rt>かず</rt></ruby>でゴールまでうごかそう！</span></p>";
+			document.getElementById("comment").innerHTML = "<p id=comment><span class='under'>シロクマくんを１<ruby>番<rt>ばん</rt></ruby><ruby>少<rt>すく</rt></ruby>ない<ruby>数<rt>かず</rt></ruby>でゴールまで<ruby>動<rt>うご</rt></ruby>かそう！</span></p>";
 		}, 2000);
 	}
 };

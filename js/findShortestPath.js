@@ -9,7 +9,7 @@ function pathfinding(){
         var distanceFromTop = startCoordinates[1];
         var distanceFromLeft = startCoordinates[1];
 
-        // 各"location"はその座標と到達に必要な最短経路を保持する
+        // 各"location"はその座標と到達に必要な最短経路を保持
         var location = {
             distanceFromTop: distanceFromTop,
             distanceFromLeft: distanceFromLeft,
