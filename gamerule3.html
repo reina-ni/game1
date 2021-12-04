@@ -11,23 +11,102 @@
 </head>
 
 <style>
-    #site-box{
-        width: 700px;
-	}
-    .under {
-        background: linear-gradient(transparent 50%, #a5ccdf 50%);
+    img{
+        padding:2px;
+    }
+    p{
+        font-size: 13px;
+    }
+    button{
+        font-family: 'Hachi Maru Pop';
+        color: #fff;
+        font-size: 13px;
+        height: 40px;
+        width: auto;
+        margin: 2px;
+        padding-left: 2%;
+        padding-right: 2%;
+        background-color: rgb(108, 160, 211);
+        border-radius: 5px;
+    }
+
+    .tab.is-active{
+        background:rgb(119, 160, 207);
+        color:#FFF;
+        transition: all 0.2s ease-out;
+    }
+    .panel.is-show{
+        display:block;
+    }
+    .tab-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        margin:20px 0;
+    }
+    .tab-wrap:after {
+        content: '';
+        width: 100%;
+        height: 3px;
+        background: rgb(119, 160, 207);
+        display: block;
+        order: -1;
+    }
+    .tab-label {
+        font-size: 15px;
+        color: rgb(119, 160, 207);
+        background: #FFF;
+        font-weight: bold;
+        text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+        white-space: nowrap;
+        text-align: center;
+        padding: 10px .5em;
+        order: -1;
+        position: relative;
+        z-index: 1;
+        cursor: pointer;
+        border-radius: 5px 5px 0 0;
+        flex: 1;
+    }
+    .tab-label:not(:last-of-type) {
+        margin-right: 5px;
+    }
+    .tab-content {
+        width: 100%;
+        height: 0;
+        overflow: hidden;
+        opacity: 0;
+        margin: 0px;
+        padding: 0px;
+    }
+    /* active tab */
+    .tab-switch:checked+.tab-label {
+        background: rgb(119, 160, 207);
+        color: #FFF;
+    }
+    .tab-switch:checked+.tab-label+.tab-content {
+        height: auto;
+        overflow: auto;
+        padding: 15px;
+        opacity: 1;
+        transition: .5s opacity;
     }
 </style>
 
 <body>
+    <audio autoplay id="audio" loop>
+        <source src="music/natsuyasuminotanken.mp3">
+    </audio>
     <div id="site-box">
-        <h1>バケツのつかいかた２</h1>
+        <div class="tab-wrap">
+            <!--バケツの使い方(レベル2)-->
+            <input id="TAB-01" type="radio" name="TAB" class="tab-switch" checked="checked" /><label class="tab-label" for="TAB-01">バケツの<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>2</label>
+            <div class="tab-content">
             <div class="sb-box">
                 <div class="icon-img icon-img-left">
                     <img src="img/player/player.png"></div>
                         <div class="icon-name icon-name-left">シロクマくん</div>
                             <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">ここからさきはひでとおれないみちがふえるよ！</div>
+                                <div class="sb-txt sb-txt-left">ここから<ruby>先<rt>さき</rt></ruby>は<ruby>火<rt>ひ</rt></ruby>で<ruby>通<rt>とお</rt></ruby>れない<ruby>道<rt>みち</rt></ruby>がふえるよ！</div>
                             </div>
             </div>
 
@@ -36,7 +115,7 @@
                     <img src="img/player/player2.png"></div>
                     <div class="icon-name icon-name-right">アザラシくん</div>
                         <div class="sb-side sb-side-right">
-                            <div class="sb-txt sb-txt-right">いまてにいれたあたらしバケツをつかうんだね！</div>
+                            <div class="sb-txt sb-txt-right"><ruby>今<rt>いま</rt></ruby><ruby>手<rt>て</rt></ruby>に<ruby>入<rt>い</rt>れたバケツを<ruby>使<rt>つか</rt></ruby>うんだね！</div>
                         </div>
             </div>
 
@@ -45,13 +124,11 @@
                     <img src="img/player/player.png"></div>
                         <div class="icon-name icon-name-left">シロクマくん</div>
                             <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">さすがアザラシくん、その通り！<br>
-                                                                いまてにいれたバケツはおおきなひをけせるよ！
-                                </div>
+                                <div class="sb-txt sb-txt-left">そう！さっきゲットした<img src="img/command/attack2.png" width="20px">で<img src="img/command/fire2.png" width="20px">を<ruby>消<rt>け</rt></ruby>せば<ruby>通<rt>とお</rt></ruby>れるよ！</div>
                             </div>
                             <div class="sb-side sb-side-left">
                                 <div class="sb-txt sb-txt-left">
-                                    <img src="img/gamerule/gr3-1.png" width="500">
+                                    <img src="img/gamerule/gr3-1.png" width="400">
                                 </div>
                             </div>
             </div>
@@ -61,7 +138,7 @@
                     <img src="img/player/player2.png"></div>
                         <div class="icon-name icon-name-right">アザラシくん</div>
                             <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">やりかたはいままでどおりだね！</span></div>
+                                <div class="sb-txt sb-txt-right">バケツの<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>はかわらないよね？</div>
                             </div>
             </div>
 
@@ -70,8 +147,11 @@
                     <img src="img/player/player.png"></div>
                         <div class="icon-name icon-name-left">シロクマくん</div>
                             <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">ちいさなひはさいしょにゲットしたバケツで、<br>
-                                    <span class="under">おおきなひは、いまてにいれたバケツでしかけすことができないよ</span></div>
+                                <div class="sb-txt sb-txt-left">うん！<img src="img/command/fire2.png" width="20px">のひとつ<ruby>前<rt>まえ</rt></ruby>のマスで<ruby>使<rt>つか</rt></ruby>おう！</div>
+                            </div>
+                            <div class="sb-side sb-side-left">
+                                <div class="sb-txt sb-txt-left"><img src="img/command/fire1.png" width="20px">は<img src="img/command/attack.png" width="20px">で、<br>
+                                                                <img src="img/command/fire2.png" width="20px">は<img src="img/command/attack2.png" width="20px">でしか<ruby>消<rt>け</rt></ruby>すことができないよ！</div>
                             </div>
             </div>
 
@@ -80,27 +160,16 @@
                     <img src="img/player/player2.png"></div>
                         <div class="icon-name icon-name-right">アザラシくん</div>
                             <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">なるほど！これでいいかな？</div>
-                            </div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">
-                                    <img src="img/gamerule/gr3-2.png" width="500">
-                                </div>
+                                <div class="sb-txt sb-txt-right">もうバッチリだよ！</div>
                             </div>
             </div>
             
-
             <div class="sb-box">
                 <div class="icon-img icon-img-left">
                     <img src="img/player/player.png"></div>
                         <div class="icon-name icon-name-left">シロクマくん</div>
                             <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">
-                                    <img src="img/gamerule/gr3-3.png" width="500">
-                                </div>
-                            </div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">せいかい！ひにあったバケツをつかってどんどんすすもう！</div>
+                                <div class="sb-txt sb-txt-left">それじゃあこの<ruby>調子<rt>ちょうし</rt></ruby>でドラゴンのすみかを<ruby>目指<rt>めざ</rt></ruby>そう！</div>
                             </div>
             </div>
 
@@ -109,11 +178,13 @@
                     <img src="img/player/player2.png"></div>
                         <div class="icon-name icon-name-right">アザラシくん</div>
                             <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">おー！</div>
+                                <div class="sb-txt sb-txt-right">お〜！<br></div>
                             </div>
             </div>
+        </div>
 
-            <button type="button" id="next"><img src="img/command/right.png"></button>
+    <div id="page_top"><a href="#">↑</a></div>
+    <button type="button" id="next"><ruby>次<rt>つぎ</rt></ruby>のステージに<ruby>進<rt>すす</rt></ruby>む</button>
 
 <script>
     document.getElementById("next").onclick = function () {

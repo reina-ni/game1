@@ -1,201 +1,449 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="icon" href="img/player/player.png">
-    <title>シロクマくんのぼうけん</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-</head>
-
-<style>
-     #site-box{
-        width: 700px;
- }
-    .under {
-        background: linear-gradient(transparent 50%, #a5ccdf 50%);
-    }
-</style>
-
+<html lang="jp">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width,initial-scale=1">
+       <link rel="icon" href="img/player/player.png">
+       <title>シロクマくんのぼうけん</title>
+       <link rel="stylesheet" href="style.css">
+       <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   </head>
+   <style>
+   img{
+       padding:2px;
+   }
+   p{
+       font-size: 13px;
+   }
+   button{
+       font-family: 'Hachi Maru Pop';
+       color: #fff;
+       font-size: 13px;
+       height: 40px;
+       width: auto;
+       margin: 2px;
+       padding-left: 2%;
+       padding-right: 2%;
+       background-color: rgb(108, 160, 211);
+       border-radius: 5px;
+   }
+ 
+   .tab.is-active{
+       background:rgb(119, 160, 207);
+       color:#FFF;
+       transition: all 0.2s ease-out;
+   }
+   .panel.is-show{
+       display:block;
+   }
+   .tab-wrap {
+       display: flex;
+       flex-wrap: wrap;
+       margin:20px 0;
+   }
+   .tab-wrap:after {
+       content: '';
+       width: 100%;
+       height: 3px;
+       background: rgb(119, 160, 207);
+       display: block;
+       order: -1;
+   }
+   .tab-label {
+       font-size: 15px;
+       color: rgb(119, 160, 207);
+       background: #FFF;
+       font-weight: bold;
+       text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+       white-space: nowrap;
+       text-align: center;
+       padding: 10px .5em;
+       order: -1;
+       position: relative;
+       z-index: 1;
+       cursor: pointer;
+       border-radius: 5px 5px 0 0;
+       flex: 1;
+   }
+   .tab-label:not(:last-of-type) {
+       margin-right: 5px;
+   }
+   .tab-content {
+       width: 100%;
+       height: 0;
+       overflow: hidden;
+       opacity: 0;
+       margin: 0px;
+       padding: 0px;
+   }
+   /* active tab */
+   .tab-switch:checked+.tab-label {
+       background: rgb(119, 160, 207);
+       color: #FFF;
+   }
+   .tab-switch:checked+.tab-label+.tab-content {
+       height: auto;
+       overflow: auto;
+       padding: 15px;
+       opacity: 1;
+       transition: .5s opacity;
+   }
+   </style>
+ 
 <body>
-    <div id="site-box">
-        <h1>ストーリー＆あそびかた</h1>
-            <p>シロクマくんはあまくてつめたいアイスがだいすきです。<br>きょうもシロクマくんはだいすきなアイスをたべていました。</p>
-            <p>しかし・・・</p>
-            <p>とつぜんシロクマくんがたべていたアイスが、ぜーんぶとけてしまったのです！</p>
-                <img src="img/player/player-story.png" height="50">
-                <img src="img/bossstage/boss/boss-story.png" height="50">
-            <p> そらをみると、ドラゴンがひをだしていました。<br>ドラゴンがシロクマくんのアイスをとかしてしまったのです！</p>
-            <p>アイスはとけて、もうたべることができません。</p>
-            <p> シロクマくんはドラゴンをたおしにいくことにきめたのでした！</p><br>
-            <div class="sb-box">
-                <div class="icon-img icon-img-left">
-                    <img src="img/player/player.png"></div>
-                        <div class="icon-name icon-name-left">シロクマくん</div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">ドラゴンをたおしにいかなくちゃ！<br>
-                                                                アザラシくんにもてつだってほしいんだ</div>
-                            </div>
-            </div>
-
-            <div class="sb-box">
-                <div class="icon-img icon-img-right">
-                    <img src="img/player/player2.png"></div>
-                    <div class="icon-name icon-name-right">アザラシくん</div>
-                        <div class="sb-side sb-side-right">
-                            <div class="sb-txt sb-txt-right">もちろん！ぼくはなにをしたらいいかな？</div>
+    <audio autoplay id="audio" loop>
+        <source src="music/natsuyasuminotanken.mp3">
+    </audio>
+<div id="site-box">
+<div class="tab-wrap">
+   <!--ストーリー&導入チャット-->
+   <input id="TAB-01" type="radio" name="TAB" class="tab-switch" checked="checked" /><label class="tab-label" for="TAB-01">ストーリー</label>
+   <div class="tab-content">
+           <p>シロクマくんはアイスが<ruby>大<rt>だい</rt></ruby>すきです。<br><ruby>今日<rt>きょう</rt></ruby>もシロクマくんは<ruby>大<rt>だい</rt></ruby>すきなアイスを<ruby>食<rt>た</rt></ruby>べていました。</p>
+           <p>しかし・・・<br>とつぜんシロクマくんが<ruby>食<rt>た</rt></ruby>べていたアイスが、ぜーんぶとけてしまったのです！</p>
+               <img src="img/player/player-story.png" height="50">
+               <img src="img/bossstage/boss/boss-story.png" height="50">
+           <p><ruby>空<rt>そら</rt></ruby>を<ruby>見<rt>み</rt></ruby>ると、ドラゴンが<ruby>火<rt>ひ</rt></ruby>を<ruby>出<rt>だ</rt></ruby>していました。<br>ドラゴンがシロクマくんのアイスをとかしてしまったのです！</p>
+           <p>アイスはとけて、もう<ruby>食<rt>た</rt></ruby>べることができません。<br>シロクマくんはドラゴンをたおしに<ruby>行<rt>い</rt></ruby>くことにきめたのでした！</p>
+           <div class="sb-box">
+               <div class="icon-img icon-img-left">
+                   <img src="img/player/player.png"></div>
+                       <div class="icon-name icon-name-left">シロクマくん</div>
+                           <div class="sb-side sb-side-left">
+                               <div class="sb-txt sb-txt-left">
+                                   ぼくのぼうけんを<ruby>手<rt>て</rt></ruby>つだってほしいんだ！</div>
+                           </div>
+           </div>
+           <div class="sb-box">
+               <div class="icon-img icon-img-right">
+                   <img src="img/player/player2.png"></div>
+                       <div class="icon-name icon-name-right">アザラシくん</div>
+                           <div class="sb-side sb-side-right">
+                               <div class="sb-txt sb-txt-right">
+                                   もちろん！ぼくは<ruby>何<rt>なに</rt></ruby>をしたらいいかな？</div>
+                           </div>
+           </div>
+           <div class="sb-box">
+               <div class="icon-img icon-img-left">
+                   <img src="img/player/player.png"></div>
+                       <div class="icon-name icon-name-left">シロクマくん</div>
+                           <div class="sb-side sb-side-left">
+                               <div class="sb-txt sb-txt-left">
+                                   うごく<ruby>数<rt>かず</rt></ruby>を<ruby>一番<rt>いちばん</rt></ruby><ruby>少<rt>すく</rt></ruby>なくしてゴールする<ruby>方<rt>ほう</rt></ruby>ほうを、<br>ボタンを<ruby>使<rt>つか</rt></ruby>って<ruby>教<rt>おし</rt></ruby>えて！<br></div>
+                               <br>
+                               <div class="sb-txt sb-txt-left">
+                                   ボタンの<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>１と２をよく<ruby>読<rt>よ</rt></ruby>んでね！</div>
+                           </div>
+           </div>
+   </div>
+   <!--ボタンの使い方１-->
+   <input id="TAB-02" type="radio" name="TAB" class="tab-switch" /><label class="tab-label" for="TAB-02">ボタンの<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>１</label>
+   <div class="tab-content">
+       <div class="sb-box">
+           <div class="icon-img icon-img-left">
+               <img src="img/player/player.png"></div>
+                   <div class="icon-name icon-name-left">シロクマくん</div>
+                       <div class="sb-side sb-side-left">
+                           <div class="sb-txt sb-txt-left">
+                               これからボタンの<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>をせつ<ruby>明<rt>めい</rt></ruby>していくよ！</div>
+                       </div>
+       </div>
+       <div class="sb-box">
+           <div class="icon-img icon-img-right">
+               <img src="img/player/player2.png"></div>
+                   <div class="icon-name icon-name-right">アザラシくん</div>
+                       <div class="sb-side sb-side-right">
+                           <div class="sb-txt sb-txt-right">
+                               うん！</div>
+                       </div>
+       </div>
+       <div class="sb-box">
+           <div class="icon-img icon-img-left">
+               <img src="img/player/player.png"></div>
+                   <div class="icon-name icon-name-left">シロクマくん</div>
+                       <div class="sb-side sb-side-left">
+                           <div class="sb-txt sb-txt-left">
+                               たとえば、このステージ！ぼくはどう<ruby>動<rt>うご</rt></ruby>けば、<br>
+                               <ruby>一番<rt>いちばん</rt></ruby><ruby>少<rt>すく</rt></ruby>ない<ruby>数<rt>かず</rt></ruby>でピンク<ruby>色<rt>いろ</rt></ruby>のマスにゴールできるかな？
+                           </div>
+                       </div>
+                       <div class="sb-side sb-side-left">
+                           <div class="sb-txt sb-txt-left">
+                               <img src="img/gamerule/gr1-1.png" width="400">
+                           </div>
+                       </div>
+       </div>
+       <div class="sb-box">
+           <div class="icon-img icon-img-right">
+               <img src="img/player/player2.png"></div>
+                   <div class="icon-name icon-name-right">アザラシくん</div>
+                       <div class="sb-side sb-side-right">
+                           <div class="sb-txt sb-txt-right">
+                               <ruby>右<rt>みぎ</rt></ruby>に６<ruby>回<rt>かい</rt></ruby><ruby>動<rt>うご</rt></ruby>けばゴールできるね！</div>
+                       </div>
+       </div>
+       <div class="sb-box">
+           <div class="icon-img icon-img-left">
+               <img src="img/player/player.png"></div>
+                   <div class="icon-name icon-name-left">シロクマくん</div>
+                       <div class="sb-side sb-side-left">
+                           <div class="sb-txt sb-txt-left">
+                               その<ruby>通<rt>とお</rt></ruby>り！それじゃ<img src="img/command/right.png" width="20px">を６<ruby>回<rt>かい</rt></ruby>おしてみよう！</div>
+                       </div>
+       </div>
+       <div class="sb-box">
+           <div class="icon-img icon-img-right">
+               <img src="img/player/player2.png"></div>
+                   <div class="icon-name icon-name-right">アザラシくん</div>
+                       <div class="sb-side sb-side-right">
+                           <div class="sb-txt sb-txt-right">
+                               あ！まちがえて<img src="img/command/left.png" width="20px">をおしちゃったよ！</div>
+                       </div>
+       </div>
+       <div class="sb-box">
+           <div class="icon-img icon-img-left">
+               <img src="img/player/player.png"></div>
+                   <div class="icon-name icon-name-left">シロクマくん</div>
+                       <div class="sb-side sb-side-left">
+                           <div class="sb-txt sb-txt-left">
+                               まちがえた<ruby>時<rt>とき</rt></ruby>は<img src="img/command/del.png" width="20px">で、ひとつずつ<ruby>消<rt>け</rt></ruby>すことができるよ！<br>
+                               もし、<ruby>全部<rt>ぜんぶ</rt></ruby>やりし<ruby>直<rt>なお</rt></ruby>したい<ruby>時<rt>とき</rt></ruby>は<img src="img/command/restart.png" width="20px">で、<ruby>全部<rt>ぜんぶ</rt></ruby><ruby>消<rt>け</rt></ruby>すことができるよ！</div>
+                       </div>
+                       <!-- <div class="sb-side sb-side-left">
+                           <div class="sb-txt sb-txt-left">
+                               <img src="img/gamerule/gr1-1.png" width="400">
+                           </div>
+                       </div> -->
+       </div>
+       <div class="sb-box">
+           <div class="icon-img icon-img-right">
+               <img src="img/player/player2.png"></div>
+                   <div class="icon-name icon-name-right">アザラシくん</div>
+                       <div class="sb-side sb-side-right">
+                           <div class="sb-txt sb-txt-right">
+                               <ruby>直<rt>なお</rt></ruby>せたよ！そしたら<img src="img/command/action.png" width="20px">をおせば、<br>シロクマくんは<ruby>教<rt>おし</rt></ruby>えた<ruby>通<rt>とお</rt></ruby>りに<ruby>動<rt>うご</rt></ruby>いてくれるんだね！</div>
+                       </div>
+       </div>
+       <div class="sb-box">
+           <div class="icon-img icon-img-left">
+               <img src="img/player/player.png"></div>
+                   <div class="icon-name icon-name-left">シロクマくん</div>
+                       <div class="sb-side sb-side-left">
+                           <div class="sb-txt sb-txt-left">
+                               ぼくの<ruby>動<rt>うご</rt></ruby>きに<ruby>合<rt>あわ</rt></ruby>せて<ruby>矢<rt>や</rt></ruby>じるしの<ruby>下<rt>した</rt></ruby>が<ruby>青<rt>あお</rt></ruby>く<ruby>光<rt>ひか</rt></ruby>るから、<br>
+                               よく<ruby>見<rt>み</rt></ruby>ていてね！</div>
+                               </ruby>
+                       </div>
+                       <div class="sb-side sb-side-left">
+                           <div class="sb-txt sb-txt-left">
+                               <img src="img/gamerule/gr1-2.png" width="400">
+                           </div>
+                       </div>
+       </div>
+       <div class="sb-box">
+           <div class="icon-img icon-img-right">
+               <img src="img/player/player2.png"></div>
+                   <div class="icon-name icon-name-right">アザラシくん</div>
+                       <div class="sb-side sb-side-right">
+                           <div class="sb-txt sb-txt-right">
+                               <ruby>本当<rt>ほんとう</rt></ruby>だ！シロクマくんをゴールさせることができた！</div>
+                       </div>
+       </div>
+       <div class="sb-box">
+        <div class="icon-img icon-img-left">
+            <img src="img/player/player.png"></div>
+                <div class="icon-name icon-name-left">シロクマくん</div>
+                    <div class="sb-side sb-side-left">
+                        <div class="sb-txt sb-txt-left">
+                            <ruby>今回<rt>こんかい</rt></ruby>は<img src="img/command/action.png" width="20px">をおす<ruby>前<rt>まえ</rt></ruby>に<ruby>動<rt>うご</rt></ruby>きを<ruby>直<rt>なお</rt></ruby>したけれど、<br>
+                            <ruby>動<rt>うご</rt></ruby>く<ruby>数<rt>かず</rt></ruby>や<ruby>向<rt>む</rt></ruby>きがちがくてゴールできなかった<ruby>時<rt>とき</rt></ruby>は<br>
+                            <img src="img/command/restart_data.png" width="20px">をおせばまたやり<ruby>直<rt>なお</rt></ruby>せるよ！</div>
+                    </div>
+                    <div class="sb-side sb-side-left">
+                        <div class="sb-txt sb-txt-left">
+                            <img src="img/gamerule/gr1-3.png" width="400">
                         </div>
-            </div>
-
-            <div class="sb-box">
-                <div class="icon-img icon-img-left">
-                    <img src="img/player/player.png"></div>
-                        <div class="icon-name icon-name-left">シロクマくん</div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">ドラゴンのすみかへのいきかたをおしえて<br>
-                                                                ピンクいろのばしょにつけば、つぎにすすめるんだ！
-                                </div>
-                            </div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">
-                                    <img src="img/gamerule/gr1-1.png" width="500">
-                                </div>
-                            </div>
-            </div>
-
-            <div class="sb-box">
-                <div class="icon-img icon-img-right">
-                    <img src="img/player/player2.png"></div>
-                        <div class="icon-name icon-name-right">アザラシくん</div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">それならかんたんだね！このボタンをつかえばいいのかな？</span></div>
-                            </div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">
-                                    <img src="img/gamerule/gr1-2.png" width="500">
-                                </div>
-                            </div>
-            </div>
-
-            <div class="sb-box">
-                <div class="icon-img icon-img-left">
-                    <img src="img/player/player.png"></div>
-                        <div class="icon-name icon-name-left">シロクマくん</div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">さすがアザラシくん、せいかい！<br>
-                                            <span class="under">これは６かい、みぎにうごけばゴールできるね</span>
-                                </div>
-                            </div>
-            </div>
-
-            <div class="sb-box">
-                <div class="icon-img icon-img-right">
-                    <img src="img/player/player2.png"></div>
-                        <div class="icon-name icon-name-right">アザラシくん</div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">すすむじゅんばんがきまったら、<br>
-                                                                チェックボタンをおせばいいんだね！</div>
-                            </div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">
-                                    <img src="img/gamerule/gr1-3.png" width="500">
-                                </div>
-                            </div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">あれ？シロクマくんがゴールいないよ？</div>
-                            </div>
-            </div>
-            
-
-            <div class="sb-box">
-                <div class="icon-img icon-img-left">
-                    <img src="img/player/player.png"></div>
-                        <div class="icon-name icon-name-left">シロクマくん</div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">
-                                    <img src="img/gamerule/gr1-4.png" width="500">
-                                </div>
-                            </div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">よくみて！<span class="under">６かいめが、ひだりにすすんでいるよ！</span></div>
-                            </div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left"><span class="under">みぎに６かい</span>じゃないと、ゴールできないから<br>
-                                                                <span class="under">やりなおしボタンをおして</span>もういちどちょうせんしてみよう！</div>
-                            </div>
-            </div>
-
-            <div class="sb-box">
-                <div class="icon-img icon-img-right">
-                    <img src="img/player/player2.png"></div>
-                        <div class="icon-name icon-name-right">アザラシくん</div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">ほんとうだ！やりなおしてみるね！</div>
-                            </div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">
-                                    <img src="img/gamerule/gr1-5.png" width="500">
-                                </div>
-                            </div>
-            </div>
-            
-            <div class="sb-box">
-                <div class="icon-img icon-img-left">
-                    <img src="img/player/player.png"></div>
-                        <div class="icon-name icon-name-left">シロクマくん</div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">せいかい！これでぼくはゴールできるよ！</div>
-                            </div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">それから、ぼくは<span class="under">アザラシくんがおしえてくれたうごきを、<br>
-                                                                まとめてでしかすすめない</span>ことをよくおぼえておいてね！</div>
-                            </div>
-            </div>
-
-            <div class="sb-box">
-                <div class="icon-img icon-img-right">
-                    <img src="img/player/player2.png"></div>
-                        <div class="icon-name icon-name-right">アザラシくん</div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">それじゃあ・・・みぎに１かいうごいてチェックボタン、<br>
-                                                                またみぎに１かいうごいてチェックボタンはダメなんだね！</div>
-                            </div>
-            </div>
-
-            <div class="sb-box">
-                <div class="icon-img icon-img-left">
-                    <img src="img/player/player.png"></div>
-                        <div class="icon-name icon-name-left">シロクマくん</div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">そのとおり！なんかいでもやりなおせるから、<br>
-                                                                まちがえたら、やりなおしボタンをおしてね！</div>
-                            </div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">もうバッチリだね！それじゃあ、ドラゴンをたおしにいこう！<br></div>
-                            </div>
-            </div>
-
-            <div class="sb-box">
-                <div class="icon-img icon-img-right">
-                    <img src="img/player/player2.png"></div>
-                        <div class="icon-name icon-name-right">アザラシくん</div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">おー！</div>
-                            </div>
-            </div>
-
-<button type="button" id="home"><img src="img/command/home.png"></button>
-<button type="button" id="next"><img src="img/command/right.png"></button>
-
-<script>
-    document.getElementById("next").onclick = function () {
-        window.location.href = "stage1.html";
-    };
-    document.getElementById("home").onclick = function () {
-        window.location.href = "index.html";
-    };
-</script>
-</body>
+                    </div>
+       </div>
+   </div>
+   <!--ボタンの使い方２-->
+   <input id="TAB-03" type="radio" name="TAB" class="tab-switch" /><label class="tab-label" for="TAB-03">ボタンの<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>２</label>
+   <div class="tab-content">
+    <div class="sb-box">
+        <div class="icon-img icon-img-left">
+            <img src="img/player/player.png"></div>
+                <div class="icon-name icon-name-left">シロクマくん</div>
+                    <div class="sb-side sb-side-left">
+                        <div class="sb-txt sb-txt-left">
+                            ゴールするとひみつノートの<ruby>切<rt>き</rt></ruby>れはしゲットできるよ！</div>
+                    </div>
+                    <div class="sb-side sb-side-left">
+                        <div class="sb-txt sb-txt-left">
+                            <img src="img/gamerule/gr1-4.png" width="400">
+                        </div>
+                    </div>
+                </div>
+    <div class="sb-box">
+        <div class="icon-img icon-img-right">
+            <img src="img/player/player2.png"></div>
+                <div class="icon-name icon-name-right">アザラシくん</div>
+                    <div class="sb-side sb-side-right">
+                        <div class="sb-txt sb-txt-right">
+                            ステージをクリアして<ruby>切<rt>き</rt></ruby>れはしを<ruby>集<rt>あつ</rt></ruby>めれば、<br>
+                            ドラゴンのすみかや、たおし<ruby>方<rt>かた</rt></ruby>とかも<ruby>分<rt>わ</rt></ruby>かるんだね！</div>
+                    </div>
+                </div>
+    <div class="sb-box">
+        <div class="icon-img icon-img-left">
+            <img src="img/player/player.png"></div>
+                <div class="icon-name icon-name-left">シロクマくん</div>
+                    <div class="sb-side sb-side-left">
+                        <div class="sb-txt sb-txt-left">
+                            さらに、<ruby>動<rt>うご</rt></ruby>く<ruby>数<rt>かず</rt></ruby>を<ruby>一番<rt>いちばん</rt></ruby><ruby>少<rt>すく</rt></ruby>なくしてゴールすることができたから、<br>
+                            <ruby>星<rt>ほし</rt></ruby>が3こ<ruby>光<rt>ひか</rt></ruby>っているよ！どのステージでも<ruby>星<rt>ほし</rt></ruby>3こを<ruby>目指<rt>めざ</rt></ruby>そう！</div>
+                    </div>       
+                    <div class="sb-side sb-side-left">
+                        <div class="sb-txt sb-txt-left">
+                            <ruby>星<rt>ほし</rt></ruby>が3こでゴールすることができないと、<br>
+                            ドラゴンのすみかになかなかつかないから<ruby>注意<rt>ちゅうい</rt></ruby>してね！</div>
+                    </div>
+                    <div class="sb-side sb-side-left">
+                        <div class="sb-txt sb-txt-left">
+                            <img src="img/gamerule/gr1-5.png" width="400">
+                        </div>
+                    </div>
+    </div>
+       <div class="sb-box">
+           <div class="icon-img icon-img-right">
+               <img src="img/player/player2.png"></div>
+                   <div class="icon-name icon-name-right">アザラシくん</div>
+                       <div class="sb-side sb-side-right">
+                           <div class="sb-txt sb-txt-right">
+                               うん！がんばるよ！<br>
+                               でもボタンの<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>わすれちゃったらどうしよう・・</div>
+                       </div>
+       </div>
+       <div class="sb-box">
+           <div class="icon-img icon-img-left">
+               <img src="img/player/player.png"></div>
+                   <div class="icon-name icon-name-left">シロクマくん</div>
+                       <div class="sb-side sb-side-left">
+                           <div class="sb-txt sb-txt-left">
+                               もし<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>をわすれちゃってもだいじょうぶ！<br>
+                               <ruby>左上<rt>ひだりうえ</rt></ruby>にある<img src="img/command/gamerule.png" width="20px">をおしてみてね！</div>
+                       </div>
+                       <div class="sb-side sb-side-left">
+                           <div class="sb-txt sb-txt-left">
+                               <img src="img/gamerule/gr1-6.png" width="400">
+                           </div>
+                       </div>
+       </div>
+       <div class="sb-box">
+           <div class="icon-img icon-img-right">
+               <img src="img/player/player2.png"></div>
+                   <div class="icon-name icon-name-right">アザラシくん</div>
+                       <div class="sb-side sb-side-right">
+                           <div class="sb-txt sb-txt-right">
+                               わぁ！これでボタンの<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>をいつでもかくにんできるんだね！</div>
+                       </div>
+                       <div class="sb-side sb-side-right">
+                           <div class="sb-txt sb-txt-right">
+                               <img src="img/gamerule/gr1-7.png" width="400">
+                           </div>
+                       </div>
+       </div>
+       <div class="sb-box">
+           <div class="icon-img icon-img-left">
+               <img src="img/player/player.png"></div>
+                   <div class="icon-name icon-name-left">シロクマくん</div>
+                       <div class="sb-side sb-side-left">
+                           <div class="sb-txt sb-txt-left">
+                               その<ruby>通<rt>とお</rt></ruby>り！さらにステージが<ruby>進<rt>すす</rt></ruby>むとヒントを<ruby>見<rt>み</rt></ruby>ることもできるんだよ！</div>
+                       </div>
+                       <div class="sb-side sb-side-left">
+                           <div class="sb-txt sb-txt-left">
+                               <img src="img/gamerule/gr1-8.png" width="400">
+                           </div>
+                       </div>
+       </div>
+       <div class="sb-box">
+           <div class="icon-img icon-img-right">
+               <img src="img/player/player2.png"></div>
+                   <div class="icon-name icon-name-right">アザラシくん</div>
+                       <div class="sb-side sb-side-right">
+                           <div class="sb-txt sb-txt-right">
+                               むずかしくて、どうしてもゴールできない<ruby>時<rt>とき</rt></ruby>に<ruby>見<rt>み</rt></ruby>れるんだね！</div>
+                       </div>
+                       <div class="sb-side sb-side-right">
+                           <div class="sb-txt sb-txt-right">
+                               <img src="img/gamerule/gr1-9.png" width="400">
+                           </div>
+                       </div>
+       </div>
+       <div class="sb-box">
+           <div class="icon-img icon-img-left">
+               <img src="img/player/player.png"></div>
+                   <div class="icon-name icon-name-left">シロクマくん</div>
+                       <div class="sb-side sb-side-left">
+                           <div class="sb-txt sb-txt-left">
+                               これであそびかたの</ruby>をせつ<ruby>明<rt>めい</rt></ruby>はおわりだよ！<br>
+                               さぁ、ぼうけんを<ruby>始<rt>はじ</rt></ruby>めよう！</div>
+                       </div>
+       </div>
+   </div>
+   <div id="page_top"><a href="#">↑</a></div>
+   <button type="button" id="home">ホームにもどる</button>
+   <button type="button" id="start">ぼうけんを<ruby>始<rt>はじ</rt></ruby>める</button>
+</div>
+</div>
+ 
+   <script>
+       // document.addEventListener('DOMContentLoaded', function(){
+ 
+       // const tabs = document.getElementsByClassName('tab');
+       // for(let i = 0; i < tabs.length; i++) {
+       //     tabs[i].addEventListener('click', tabSwitch, false);
+       // }
+ 
+       // function tabSwitch(){
+       //     // tabclassの値を変更
+       //     document.getElementsByClassName('is-active')[0].classList.remove('is-active');
+       //     this.classList.add('is-active');
+ 
+       //     document.getElementsByClassName('is-show')[0].classList.remove('is-show');
+       //     const arrayTabs = Array.prototype.slice.call(tabs);
+       //     const index = arrayTabs.indexOf(this);
+       //     document.getElementsByClassName('panel')[index].classList.add('is-show');
+       // };
+       // }, false);
+ 
+       // Pagetop-R
+       $(function(){
+       var pagetop = $('#page_top');
+       pagetop.hide();
+ 
+       $(window).scroll(function () {
+       if ($(this).scrollTop() > 100) {
+           pagetop.fadeIn();
+       } else {
+           pagetop.fadeOut();
+       }
+       });
+       pagetop.click(function () {
+       $('body, html').animate({ scrollTop: 0 }, 500);
+       return false;
+       });
+       });
+ 
+       //HOME&Stage1
+       document.getElementById("home").onclick = function () {
+       window.location.href = "index.html";
+       };
+       document.getElementById("start").onclick = function () {
+       window.location.href = "character.html";
+       };
+   </script>
+   </body>
 </html>
+

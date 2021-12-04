@@ -67,10 +67,9 @@
 	<div id ="site-box">
 		<p id="stage">ステージ 1</p>
 		<div class="flex">
-<!-- 			<audio autoplay id="audio" loop>
-				<source src="music/SE.mp3">
-			  </audio> -->
-			<EMBED src="music/natsuyasuminotanken.mp3" autostart="true" hidden="true">
+			<audio autoplay id="audio" loop>
+				<source src="music/natsuyasuminotanken.mp3">
+			</audio>
 		<label class="open" for="pop-up"><img src="img/command/gamerule.png" width="20px" height="20px"></label>
 			<input type="checkbox" id="pop-up">
 				<div class="overlay">
@@ -79,19 +78,19 @@
 						<p>あそびかた</p>
 						<label class="close" for="pop-up">×</label>
 						<ul id="list">
-							<li class="item"><img src="img/command/left.png" width="20">　ひだりに１マスすすむ</li>
-							<li class="item"><img src="img/command/right.png" width="20">　みぎに１マスすすむ</li>
-							<li class="item"><img src="img/command/del.png" width="20">　うごきをひとつけす</li>
-							<li class="item"><img src="img/command/restart.png" width="20">　うごきをぜんぶけす</li>
+							<li class="item"><img src="img/command/left.png" width="20">　<ruby>左<rt>ひだり</rt></ruby>に１マス<ruby>進<rt>すす</rt></ruby>む</li>
+							<li class="item"><img src="img/command/right.png" width="20">　<ruby>右<rt>みぎ</rt></ruby>に１マス<ruby>進<rt>すす</rt></ruby>む</li>
+							<li class="item"><img src="img/command/del.png" width="20">　<ruby>動<rt>うご</rt></ruby>きをひとつ<ruby>消<rt>け</rt></ruby>す</li>
+							<li class="item"><img src="img/command/restart.png" width="20">　<ruby>動<rt>うご</rt></ruby>きを<ruby>全部<rt>ぜんぶ</rt></ruby><ruby>消<rt>け</rt></ruby>す</li>
 						</ul>
 						<br><br><br><br><br>
-						<span class="under">シロクマくんはまとめてしかうごけないよ！</span><br><br>
+						<span class="under">シロクマくんはまとめてでしか<ruby>動<rt>うご</rt></ruby>けないよ！</span><br><br>
 					</div>
 				</div>
 		</div>
 				<audio id="SE"preload="auto"><source src="music/SE.mp3" type="audio/mp3"></audio>
 		<form action="#" name="form1"></form>
-		<p id=comment><span class="under">シロクマくんを１ばんすくない<ruby>数<rt>かず</rt></ruby>でゴールまでうごかそう！</span></p>
+		<p id=comment><span class="under">シロクマくんを１<ruby>番<rt>ばん</rt></ruby><ruby>少<rt>すく</rt></ruby>ない<ruby>数<rt>かず</rt></ruby>でゴールまで<ruby>動<rt>うご</rt></ruby>かそう！</span></p>
 		<br>
 		<div><canvas id="canvas"></canvas></div>
 				<div ontouchstart="">
@@ -124,7 +123,7 @@
 		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
 		line.push("右"); 
 		console.log(line);
-		document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+		// document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
 		rewrite();
 	};
 	document.getElementById("left").onclick = function () {
@@ -132,7 +131,7 @@
 		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
 		line.push("左");
 		console.log(line);
-		document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+		// document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
 		rewrite();
 	};
 	document.getElementById("up").onclick = function () {
@@ -140,7 +139,7 @@
 		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
 		line.push("上");
 		console.log(line);
-		document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+		// document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
 		rewrite();
 	};
 	document.getElementById("down").onclick = function () {
@@ -148,7 +147,7 @@
 		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
 		line.push("下");
 		console.log(line);
-		document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+		// document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
 		rewrite();
 	};
 
@@ -176,6 +175,9 @@
 
 	//データ残してやり直す処理
 	document.getElementById("again_data").onclick = function () {
+	for(var i=0;i<line.length;i++){//背景色戻す
+		document.getElementById(i).style.backgroundColor="rgb(165, 204, 223)";
+	}
 	document.getElementById("again_data").hidden = true;
 	document.getElementById("right").hidden = false;
 	document.getElementById("left").hidden = false;
@@ -184,7 +186,7 @@
 	document.getElementById("act").hidden = false;
 	document.getElementById("del").hidden = false;
 	document.getElementById("again").hidden = false;
-	document.getElementById("comment").innerHTML = "<p id=comment><span class='under'>シロクマくんを１ばんすくない<ruby>数<rt>かず</rt></ruby>でゴールまでうごかそう！</span></p>";
+	document.getElementById("comment").innerHTML = "<p id=comment><span class='under'>シロクマくんを１<ruby>番<rt>ばん</rt></ruby><ruby>少<rt>すく</rt></ruby>ない<ruby>数<rt>かず</rt></ruby>でゴールまで<ruby>動<rt>うご</rt></ruby>かそう！</span></p>";
 
 	player.x = 48;
 	player.y = 48;
@@ -204,12 +206,16 @@
 		}
 		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
 		
-		if (line.length > 0) {
-			document.getElementById("move").innerHTML = "シロクマくんのうごき：";
-			for (let j = 0; j < line.length; j++) {
-				var url=image[line[j]];
-				document.getElementById("move").innerHTML += url;
-			}
+		// if (line.length > 0) {
+		// 	document.getElementById("move").innerHTML = "シロクマくんのうごき：";
+		// 	for (let j = 0; j < line.length; j++) {
+		// 		console.log(j);
+		// 		var url=image[line[j]];
+		// 		document.getElementById("move").innerHTML += url;
+		// 	}
+		// }
+		if(line.length > 0){//配列末尾画像削除
+			document.getElementById(line.length).remove();
 		}
 	};
 
@@ -217,10 +223,20 @@
 	//<p1>再表示
 	function rewrite() {
 		if (line.length > 1) {
-			for (let j = 1; j < line.length; j++) {
-				var url=image[line[j]];
+			// for (let j = 1; j < line.length; j++) {
+				var url=image[line[line.length-1]];
+				var num=line.length-1;
+				url="<p2 id="+num+">"+url+"</p2>";//idつける
+				console.log(url);
 				document.getElementById("move").innerHTML += url;
-			}
+				console.log(document.getElementById("move"));
+			// }
+		}else{//line配列一番目
+			var url1=image[line[0]];
+			url1="<p2 id="+0+">"+url1+"</p2>";//idつける
+			document.getElementById("move").innerHTML += url1;
+			console.log(url1);
+
 		}
 	}
 

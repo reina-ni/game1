@@ -13,16 +13,20 @@
     p{
         margin-top: 5%;
         margin-left: 2%;
+        font-size: 15px;
     }
     button{
         text-align: center;
+        margin-top: 2%;
+    }
+    .star{
         margin-top: 2%;
     }
     .flex{
         background-color: none;
         display: flex;
         justify-content: center;
-        margin-top: 10%;
+        margin-top: 5%;
     }
     .float {
         animation: float_2979 3s linear infinite;
@@ -34,17 +38,62 @@
         66.66667% { transform: translateY(0) }
         100% { transform: translateY(0) }
     }
+    .flash-title {
+		position: fixed;
+		top: 0;
+		left: 0;
+		display: table;
+		width: 100%;
+		height: 100%;
+		-webkit-animation: fade-in-out 5s ease 1s forwards;
+		animation: fade-in-out 5s ease 2.0s forwards;
+		visibility: hidden;
+		z-index: 1;
+	}
+	@-webkit-keyframes fade-in-out {
+		0% {visibility: hidden; opacity: 0;}
+		50% {visibility: visible; opacity: 1;}
+		100% {visibility: hidden; opacity: 0;}
+	}
+	@keyframes fade-in-out {
+		0% {visibility: hidden; opacity: 0;}
+		50% {visibility: visible; opacity: 1;}
+		100% {visibility: hidden; opacity: 0;}
+	}
+    /* .star :hover{
+        transform: rotate(360deg);  
+        transition: 4s;              */
+    /* } */
+    @keyframes rotate_anime {
+    0% {
+        transform:rotate(0deg);/* アニメーションの進みが0%の時の状態 */
+    }
+    100% {
+        transform:rotate(360deg);/* アニメーションの進みが100%の時の状態 */
+    }
+    }
+    #star1 ,#star2 ,#star3 {
+    animation: rotate_anime 7s infinite; /* rotate_animeを1秒かけて実行するのを繰り返す */
+    }
+
 </style>
 
 <body>
-    <div id="awan">
-        <EMBED src="music/tousen.mp3" autostart="true" hidden="true">
+    <div id="awan" ontouchstart="">
+        <!-- <EMBED src="music/tousen.mp3" autostart="true" hidden="true"> -->
+            <audio autoplay id="audio">
+				<source src="music/tousen.mp3">
+			  </audio>
+        <div class="star">
+            <img src="img/other/nostar.png" id="star1" height="50">
+            <img src="img/other/nostar.png" id="star2" height="50">
+            <img src="img/other/nostar.png" id="star3" height="50">
+        </div>
         <div class="float">
             <div class="flex">
                 <p id="clearcountshortest"></p>
                 <img src="img/player/playerclear01.png" id="clearbear" height="100">
-                <p id="clearcount">いどうかいすう：</p>
-                <p id="notclearcountshortest"></p>
+                <p id="clearcount"></p>
             </div>
         </div>
             <p id="icc"></p>
@@ -57,63 +106,151 @@
     console.log("移動回数結果："+clearcount);
     var clearcountshortest = window.localStorage.getItem("clearcountshortest");
     console.log("最短移動回数："+clearcountshortest);
+
+    clearcount-=0;//stringからnumberにするための処理
+    clearcountshortest-=0;
     
     if (clearcount == clearcountshortest) {
-        document.getElementById("clearcountshortest").innerHTML = "さいたんいどうでクリア！";
+        var img = document.getElementById('star1');
+        window.setTimeout(function(){
+            star1.setAttribute('src', 'img/other/star.png');
+        }, 500);
+        var img = document.getElementById('star2');
+        window.setTimeout(function(){
+            star2.setAttribute('src', 'img/other/star.png');
+        }, 1000);
+        var img = document.getElementById('star3');
+        window.setTimeout(function(){
+            star3.setAttribute('src', 'img/other/star.png');
+        }, 1500);
+        document.getElementById("clearcountshortest").innerHTML = "この<ruby>調子<rt>ちょうし</rt></ruby>で<ruby>進<rt>すす</rt></ruby>もう！";
+        document.getElementById("clearcount").innerHTML = "かんぺき！";
         console.log('最短移動でクリア');
     }else{
-        document.getElementById("notclearcountshortest").innerHTML = "つぎはさいたんをめざそう！";
+        if (clearcount == clearcountshortest+1) {//1回多かった時の表示
+            console.log("1回多かったよ");
+            var img = document.getElementById('star1');
+            window.setTimeout(function(){
+                star1.setAttribute('src', 'img/other/star.png');
+            }, 500);
+            var img = document.getElementById('star2');
+            window.setTimeout(function(){
+                star2.setAttribute('src', 'img/other/star.png');
+            }, 1000);
+            document.getElementById("clearcountshortest").innerHTML = "あとちょっと！";
+            document.getElementById("clearcount").innerHTML = "<ruby>動<rt>うご</rt></ruby><ruby>きが1 <ruby>回<rt>かい</rt></ruby><ruby>多<rt>おお</rt></ruby>かったよ！";
+        }else if(clearcount > clearcountshortest+1){//2回以上多かった時の表示
+            console.log(clearcount-clearcountshortest+"回多かったよ");
+            var img = document.getElementById('star1');
+            window.setTimeout(function(){
+                star1.setAttribute('src', 'img/other/star.png');
+            }, 800);
+            document.getElementById("clearcountshortest").innerHTML = "<ruby>次<rt>つぎ</rt></ruby>がんばろう！";
+            document.getElementById("clearcount").innerHTML = "<ruby>動<rt>うご</rt></ruby>きが"+(clearcount-clearcountshortest)+"<ruby>回<rt>かい</rt></ruby><ruby>多<rt>おお</rt></ruby>かったよ！";
+        }
+        // document.getElementById("notclearcountshortest").innerHTML = "つぎはさいたんをめざそう！";
     }
 
     var filename = window.localStorage.getItem("filename");
     console.log("次ステージ："+filename);
-    document.getElementById("clearcount").innerHTML = "いどうかいすう：" + clearcount + "かい";
+    
 
-    //stage1で最短クリア二回出来たらstage2へ
+    //最短クリア出来たら次stageへ
     var shortest_check = window.localStorage.getItem("shortest_check");
 
     console.log(shortest_check);
-    if(shortest_check == 11){//文字列で受け渡しされてしまうため11(回数分並べる)
+    if(shortest_check == '01'){//文字列で受け渡し
         filename = "stage2_1.html";
         console.log("次ステージ変更："+filename);
         shortest_check = 1;//各stageの最後のページにもこの数をセット
+
+        document.write("<div class='flash-title'>");
+        document.write("<h2>ひみつノートの<ruby>切<rt>き</rt></ruby>れはしゲット！</h2>");
+        document.write("<p class='resizeimage'>");
+        document.write("<img src='img/map/map1.png' width='400px'></p></div>");
+    }
+
+    if(shortest_check == 12){
+        filename = "stage3.html";
+        console.log("次ステージ変更："+filename);
+        shortest_check = 2;//各stageの最後のページにもこの数をセット
+
+        document.write("<div class='flash-title'>");
+        document.write("<h2>ひみつノートの<ruby>切<rt>き</rt></ruby>れはしゲット！</h2>");
+        document.write("<p class='resizeimage'>");
+        document.write("<img src='img/map/map2.png' width='400px'></p></div>");
     }
     
-    if(shortest_check == 13){//3の個数がstage3の最短クリア回数(1は前の記録)
+    if(shortest_check == 23){//3の個数がstage3の最短クリア回数(1は前の記録)
         filename = "stage3_last.html";
         console.log("次ステージ変更："+filename);
         shortest_check = 3;
+
+        document.write("<div class='flash-title'>");
+        document.write("<h2>ひみつノートの<ruby>切<rt>き</rt></ruby>れはしゲット！</h2>");
+        document.write("<p class='resizeimage'>");
+        document.write("<img src='img/map/map3.png' width='400px'></p></div>");
     }
 
     if(shortest_check == 34){//4の個数がstage4の最短クリア回数(3は前の記録)
         filename = "stage5.html";
         console.log("次ステージ変更："+filename);
         shortest_check = 4;
+
+        document.write("<div class='flash-title'>");
+        document.write("<h2>ひみつノートの<ruby>切<rt>き</rt></ruby>れはしゲット！</h2>");
+        document.write("<p class='resizeimage'>");
+        document.write("<img src='img/map/map4.png' width='400px'></p></div>");
     }
     if(shortest_check == 45){//5の個数がstage5の最短クリア回数(4は前の記録)
         filename = "stage5_last.html";
         console.log("次ステージ変更："+filename);
         shortest_check = 5;
+
+        document.write("<div class='flash-title'>");
+        document.write("<h2>ひみつノートの<ruby>切<rt>き</rt></ruby>れはしゲット！</h2>");
+        document.write("<p class='resizeimage'>");
+        document.write("<img src='img/map/map5.png' width='400px'></p></div>");
     }
     if(shortest_check == 56){//6の個数がstage6の最短クリア回数(5は前の記録)
         filename = "stage7.html";
         console.log("次ステージ変更："+filename);
         shortest_check = 6;
+
+        document.write("<div class='flash-title'>");
+        document.write("<h2>ひみつノートの<ruby>切<rt>き</rt></ruby>れはしゲット！</h2>");
+        document.write("<p class='resizeimage'>");
+        document.write("<img src='img/map/map6.png' width='400px'></p></div>");
     }
     if(shortest_check == 67){//7の個数がstage7の最短クリア回数(6は前の記録)
         filename = "stage7_last.html";
         console.log("次ステージ変更："+filename);
         shortest_check = 7;
+
+        document.write("<div class='flash-title'>");
+        document.write("<h2>ひみつノートの<ruby>切<rt>き</rt></ruby>れはしゲット！</h2>");
+        document.write("<p class='resizeimage'>");
+        document.write("<img src='img/map/map7.png' width='400px'></p></div>");
     }
     if(shortest_check == 78){//8の個数がstage8の最短クリア回数(7は前の記録)
         filename = "stage9.html";
         console.log("次ステージ変更："+filename);
         shortest_check = 8;
+
+        document.write("<div class='flash-title'>");
+        document.write("<h2>ひみつノートの<ruby>切<rt>き</rt></ruby>れはしゲット！</h2>");
+        document.write("<p class='resizeimage'>");
+        document.write("<img src='img/map/map8.png' width='400px'></p></div>");
     }
     if(shortest_check == 89){//9の個数がstage9の最短クリア回数(8は前の記録)
         filename = "stage10.html";
         console.log("次ステージ変更："+filename);
         shortest_check = 9;
+        
+        document.write("<div class='flash-title'>");
+        document.write("<h2>ひみつノートの<ruby>切<rt>き</rt></ruby>れはしゲット！</h2>");
+        document.write("<p class='resizeimage'>");
+        document.write("<img src='img/map/map9.png' width='400px'></p></div>");
     }
     if(shortest_check == 10){//クリア画面あざらしくんに変更
         var img = document.getElementById('clearbear');
@@ -122,6 +259,11 @@
         filename = "gamerule5.html";
         console.log("次ステージ変更："+filename);
         shortest_check = 0;
+
+        document.write("<div class='flash-title'>");
+        document.write("<h2>ひみつノートが、かんせいしたよ！</h2>");
+        document.write("<p class='resizeimage'>");
+        document.write("<img src='img/map/map10.png' width='400px'></p></div>");
     }
     window.localStorage.setItem("shortest_check",shortest_check);
 

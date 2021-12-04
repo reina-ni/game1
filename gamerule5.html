@@ -13,169 +13,213 @@
 </head>
 
 <style>
-    *{ background:#FFC29B} 
-    
-    #site-box{
-        width: 700px;
-	}
-    .under {
-        background: linear-gradient(transparent 50%, #FFC29B 50%);
+    *{ background:#FFC29B;}
+
+    img{
+        padding:2px;
+    }
+    p{
+        font-size: 13px;
+    }
+    button{
+        font-family: 'Hachi Maru Pop';
+        color: #fff;
+        font-size: 13px;
+        height: 40px;
+        width: auto;
+        margin: 2px;
+        padding-left: 2%;
+        padding-right: 2%;
+        background-color: rgb(108, 160, 211);
+        border-radius: 5px;
+    }
+
+    .tab.is-active{
+        background:#ff8d63;
+        color:#FFF;
+        transition: all 0.2s ease-out;
+    }
+    .panel.is-show{
+        display:block;
+    }
+    .tab-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        margin:20px 0;
+    }
+    .tab-wrap:after {
+        content: '';
+        width: 100%;
+        height: 3px;
+        background:#ff8d63;
+        display: block;
+        order: -1;
+    }
+    .tab-label {
+        font-size: 15px;
+        color:#ff8d63;
+        background: #FFF;
+        font-weight: bold;
+        text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+        white-space: nowrap;
+        text-align: center;
+        padding: 10px .5em;
+        order: -1;
+        position: relative;
+        z-index: 1;
+        cursor: pointer;
+        border-radius: 5px 5px 0 0;
+        flex: 1;
+    }
+    .tab-label:not(:last-of-type) {
+        margin-right: 5px;
+    }
+    .tab-content {
+        width: 100%;
+        height: 0;
+        overflow: hidden;
+        opacity: 0;
+        margin: 0px;
+        padding: 0px;
+    }
+    /* active tab */
+    .tab-switch:checked+.tab-label {
+        background:#ff8d63;
+        color: #FFF;
+    }
+    .tab-switch:checked+.tab-label+.tab-content {
+        height: auto;
+        overflow: auto;
+        padding: 15px;
+        opacity: 1;
+        transition: .5s opacity;
+    }
+    #next,#page_top a{
+        background-color: #ff8d63;
     }
 </style>
 
 <body>
+    <audio autoplay id="audio" loop>
+        <source src="music/natsuyasuminotanken.mp3">
+    </audio>
     <div id="site-box">
-        <h1>ドラゴンのたおしかた</h1>
+        <div class="tab-wrap">
+            <!--バケツの使い方(レベル3)-->
+            <input id="TAB-01" type="radio" name="TAB" class="tab-switch" checked="checked" /><label class="tab-label" for="TAB-01">バケツの<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>３</label>
+            <div class="tab-content">
             <div class="sb-box">
                 <div class="icon-img icon-img-left">
-                    <img src="img/player/player2.png"></div>
-                        <div class="icon-name icon-name-left">アザラシくん</div>
+                    <img src="img/player/player.png"></div>
+                        <div class="icon-name icon-name-left">シロクマくん</div>
                             <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">ドラゴンのうえにアイスがあるのがわかるかな？</div>
+                                <div class="sb-txt sb-txt-left">
+                                    ついにドラゴンのすみかにたどり<ruby>着<rt>つ</rt></ruby>いたね！<br>
+                                    さらにひみつノートもかんせいしたから、かくにんしてみよう！</div>
                             </div>
                             <div class="sb-side sb-side-left">
                                 <div class="sb-txt sb-txt-left">
-                                    <img src="img/gamerule/gr5-1.png" width="500">
-                                </div>
+                                    <img src="img/map/map10.png" width="500" height="400"></div>
                             </div>
             </div>
 
             <div class="sb-box">
                 <div class="icon-img icon-img-right">
-                    <img src="img/player/player.png"></div>
-                    <div class="icon-name icon-name-right">シロクマくん</div>
+                    <img src="img/player/player2.png"></div>
+                    <div class="icon-name icon-name-right">アザラシくん</div>
                         <div class="sb-side sb-side-right">
-                            <div class="sb-txt sb-txt-right">あおいろのおいしそうなアイスだね！</div>
+                            <div class="sb-txt sb-txt-right">
+                                ぼくが<ruby>見<rt>み</rt></ruby>つけた<img src="img/command/icc.png" width="20px">を<ruby>使<rt>つか</rt></ruby>うんだね！</div>
                         </div>
             </div>
 
             <div class="sb-box">
                 <div class="icon-img icon-img-left">
-                    <img src="img/player/player2.png"></div>
-                        <div class="icon-name icon-name-left">アザラシくん</div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">そのいろのアイスをとりにいってほしいんだ<br>
-                                            <span class="under">さっきぼくがあげたコーンをつかえばアイスをとれるよ！</span></div>
-                            </div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">アイスは、ひをけすときとはちがって<br>
-                                            <span class="under">アイスのあるマスのまえでコーンをつかってもとれないよ！</span>
-                                </div>
-                            </div>
-            </div>
-
-            <div class="sb-box">
-                <div class="icon-img icon-img-right">
                     <img src="img/player/player.png"></div>
-                        <div class="icon-name icon-name-right">シロクマくん</div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">それならかんたんだね！さっそくやってみるよ！</span></div>
-                            </div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">
-                                    <img src="img/gamerule/gr5-2.png" width="500">
-                                </div>
-                            </div>
-            </div>
-
-            <div class="sb-box">
-                <div class="icon-img icon-img-left">
-                    <img src="img/player/player2.png"></div>
-                        <div class="icon-name icon-name-left">アザラシくん</div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">さすがシロクマくん、せいかい！<br>
-                                            <span class="under">ぼくとドラゴンのアイスがおなじになればこうげきできるんだ！</span>
-                                </div>
-                            </div>
-            </div>
-
-            <div class="sb-box">
-                <div class="icon-img icon-img-right">
-                    <img src="img/player/player.png"></div>
-                        <div class="icon-name icon-name-right">シロクマくん</div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">ほんとうだ！ドラゴンのHPがへってあたらしいアイスがでてきたね！</div>
-                            </div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">
-                                    <img src="img/gamerule/gr5-3.png" width="500">
-                                </div>
-                            </div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">あれ？ドラゴンにこうげきできないよ？</div>
-                            </div>
-            </div>
-            
-
-            <div class="sb-box">
-                <div class="icon-img icon-img-left">
-                    <img src="img/player/player2.png"></div>
-                        <div class="icon-name icon-name-left">アザラシくん</div>
+                        <div class="icon-name icon-name-left">シロクマくん</div>
                             <div class="sb-side sb-side-left">
                                 <div class="sb-txt sb-txt-left">
-                                    <img src="img/gamerule/gr5-4.png" width="500">
-                                </div>
+                                    そうだね！ドラゴンの<ruby>上<rt>うえ</rt></ruby>にあるアイスと<ruby>同<rt>おな</rt></ruby>じアイスを、<br>
+                                    <img src="img/command/icc.png" width="20px">で<ruby>取<rt>と</rt></ruby>ろう！</div>
                             </div>
                             <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">よくみて！<span class="under">アイスのじゅんばんがちがうよ！</span></div>
-                            </div>
+                                <div class="sb-txt sb-txt-left">
+                                    <img src="img/gamerule/gr5-1.png" width="400"></div>
+                                </div>
             </div>
 
             <div class="sb-box">
                 <div class="icon-img icon-img-right">
-                    <img src="img/player/player.png"></div>
-                        <div class="icon-name icon-name-right">シロクマくん</div>
+                    <img src="img/player/player2.png"></div>
+                        <div class="icon-name icon-name-right">アザラシくん</div>
                             <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">ほんとうだ！でも１だんめのアイスのまえに３だんめのアイスがあるよ？</div>
+                                <div class="sb-txt sb-txt-right">
+                                    <img src="img/command/icc.png" width="20px">はどうやって<ruby>使<rt>つか</rt></ruby>えばいいのかな？</div>
                             </div>
             </div>
 
             <div class="sb-box">
                 <div class="icon-img icon-img-left">
-                    <img src="img/player/player2.png"></div>
-                        <div class="icon-name icon-name-left">アザラシくん</div>
+                    <img src="img/player/player.png"></div>
+                        <div class="icon-name icon-name-left">シロクマくん</div>
                             <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left"><span class="under">いらないアイスや、じゅんばんがあとのアイスは<br>
-                                                                                    とらないでとおることができるよ！</span></div>
-                            </div>
-                            <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left"><span class="under">ドラゴンとおなじじゅんばんのアイス</span>じゃないと、<br>こうげきできないんだ！もういちどちょうせんしてみよう！</div>
+                                <div class="sb-txt sb-txt-left">
+                                    バケツは<ruby>火<rt>ひ</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>のマスで<ruby>使<rt>つか</rt></ruby>っていたけれど、<br>
+                                    <img src="img/command/icc.png" width="20px">は<img src="img/command/icgr.png" width="20px">のマスにいる<ruby>時<rt>とき</rt></ruby>に<ruby>使<rt>つか</rt></ruby>えるよ！</div>
                             </div>
             </div>
 
             <div class="sb-box">
                 <div class="icon-img icon-img-right">
-                    <img src="img/player/player.png"></div>
-                        <div class="icon-name icon-name-right">シロクマくん</div>
+                    <img src="img/player/player2.png"></div>
+                        <div class="icon-name icon-name-right">アザラシくん</div>
                             <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">やりなおしてみるね！</div>
-                            </div>
-                            <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">
-                                    <img src="img/gamerule/gr5-5.png" width="500">
-                                </div>
+                                <div class="sb-txt sb-txt-right">バケツとはちがうから<ruby>注意<rt>ちゅうい</rt></ruby>だね！</div>
                             </div>
             </div>
             
             <div class="sb-box">
                 <div class="icon-img icon-img-left">
-                    <img src="img/player/player2.png"></div>
-                        <div class="icon-name icon-name-left">アザラシくん</div>
+                    <img src="img/player/player.png"></div>
+                        <div class="icon-name icon-name-left">シロクマくん</div>
                             <div class="sb-side sb-side-left">
-                                <div class="sb-txt sb-txt-left">せいかいだね！このちょうしでボスステージをクリアしよう！</div>
+                                <div class="sb-txt sb-txt-left">
+                                    ドラゴンと<ruby>同<rt>おな</rt></ruby>じアイスを<ruby>取<rt>と</rt></ruby>って、<br>
+                                    <ruby>正<rt>せい</rt></ruby>かいすればドラゴンにこうげきしてドラゴンの<ruby>体力<rt>たいりょく</rt></ruby>をへらすことができるよ！</div>
                             </div>
             </div>
 
             <div class="sb-box">
                 <div class="icon-img icon-img-right">
-                    <img src="img/player/player.png"></div>
-                        <div class="icon-name icon-name-right">シロクマくん</div>
+                    <img src="img/player/player2.png"></div>
+                        <div class="icon-name icon-name-right">アザラシくん</div>
                             <div class="sb-side sb-side-right">
-                                <div class="sb-txt sb-txt-right">おー！</div>
+                                <div class="sb-txt sb-txt-right">アイスのじゅん<ruby>番<rt>ばん</rt></ruby>をよく<ruby>見<rt>み</rt></ruby>るよ！</div>
                             </div>
             </div>
 
-            <button type="button" id="next"><img src="img/command/right.png"></button>
+            <div class="sb-box">
+                <div class="icon-img icon-img-left">
+                    <img src="img/player/player.png"></div>
+                        <div class="icon-name icon-name-left">シロクマくん</div>
+                            <div class="sb-side sb-side-left">
+                                <div class="sb-txt sb-txt-left">
+                                    がんばって、ドラゴンをたおそう！</div>
+                            </div>
+            </div>
+            <div class="sb-box">
+                <div class="icon-img icon-img-right">
+                    <img src="img/player/player2.png"></div>
+                        <div class="icon-name icon-name-right">アザラシくん</div>
+                            <div class="sb-side sb-side-right">
+                                <div class="sb-txt sb-txt-right">
+                                    お〜！</div>
+                            </div>
+            </div>
+        </div>
+
+    <div id="page_top"><a href="#">↑</a></div>
+    <button type="button" id="next"><ruby>次<rt>つぎ</rt></ruby>のステージに<ruby>進<rt>すす</rt></ruby>む</button>
 
 <script>
     document.getElementById("next").onclick = function () {

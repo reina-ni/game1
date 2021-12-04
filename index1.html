@@ -20,6 +20,19 @@
     font-family: 'Hachi Maru Pop';
   }
 
+  button{
+    font-family: 'Hachi Maru Pop';
+    color: #fff;
+    font-size: 13px;
+    height: 40px;
+    width: auto;
+    margin: 2px;
+    padding-left: 2%;
+    padding-right: 2%;
+    background-color: rgb(108, 160, 211);
+    border-radius: 5px;
+  }
+
 	div{
 		text-align: center;
 		background-color: none;
@@ -33,23 +46,23 @@
 </style>
 
   <body>
-    <div id="awan">
+    <!-- ボスステージクリア画面からのホーム遷移 -->
+    <div id="awan" ontouchstart="">
+      <audio autoplay id="audio" loop>
+        <source src="music/natsuyasuminotanken.mp3">
+      </audio>
       <img src="img/other/logo.png">
         <h1>シロクマくんのぼうけん</h1>
-          <!-- <button id=st>ストーリー</button> -->
           <button id=btn>ボスステージ</button>
           <button id=start>はじめから</button>
     </div>
-
+    
     <script>
-      // document.getElementById("st").onclick = function () {
-      //   window.location.href = "story.html";
-      // };
       document.getElementById("btn").onclick = function () {
         window.location.href = "bossstage.html";
       };
       document.getElementById("start").onclick = function () {
-        window.location.href = "stage1.html";
+        window.location.href = "character.html";
       };
     </script>
 

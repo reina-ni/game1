@@ -55,19 +55,27 @@
         justify-content: right;
         margin-top: 0%;
     }
+	#pub,#pub2{
+		font-family: 'Hachi Maru Pop';
+		color: #fff;
+		font-size: 13px;
+		height: 40px;
+		width: 100px;
+		margin: 2px;
+		padding-left: 2%;
+		padding-right: 2%;
+		background-color: rgb(108, 160, 211);
+		border-radius: 5px;
+	}
 </style>
 
 <body>
 	<div id ="site-box">
 		<p id="stage">ステージ 5　あたらしいバケツをゲットしよう！</p>
 		<div class="flex">
-		<div class="audio_wrap">
-			<div class="audio_button">
-				<audio id="audio" src="music/natsuyasuminotanken.mp3" loop>
-					あなたのブラウザーは<code>audio</code>要素をサポートしていません。</audio>
-			</div>
-		</div>
-
+			<audio autoplay id="audio" loop>
+				<source src="music/natsuyasuminotanken.mp3">
+			</audio>
 		<label class="open" for="pop-up"><img src="img/command/gamerule.png" width="20px" height="20px"></label>
 			<input type="checkbox" id="pop-up">
 				<div class="overlay">
@@ -83,10 +91,10 @@
 		</div>
 				<audio id="SE"preload="auto"><source src="music/SE.mp3" type="audio/mp3"></audio>
 		<form action="#" name="form1"></form>
-		<p id=comment><span class="under">シロクマくんを１ばんすくない<ruby>数<rt>かず</rt></ruby>でゴールまでうごかそう！</span></p>
+		<p id=comment><span class="under">シロクマくんを１<ruby>番<rt>ばん</rt></ruby><ruby>少<rt>すく</rt></ruby>ない<ruby>数<rt>かず</rt></ruby>でゴールまで<ruby>動<rt>うご</rt></ruby>かそう！</span></p>
 		<br>
 		<div><canvas id="canvas"></canvas></div>
-			<div>
+			<div ontouchstart="">
 				<button type="button" id="left"><img src="img/command/left.png" id="左"></button>
 				<button type="button" id="right"><img src="img/command/right.png" id="右"></button>
 				<button type="button" id="up"><img src="img/command/up.png" id="上"></button>
@@ -116,7 +124,7 @@
 		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
 		line.push("右"); 
 		console.log(line);
-		document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+		// document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
 		rewrite();
 	};
 	document.getElementById("left").onclick = function () {
@@ -124,7 +132,7 @@
 		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
 		line.push("左");
 		console.log(line);
-		document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+		// document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
 		rewrite();
 	};
 	document.getElementById("up").onclick = function () {
@@ -132,7 +140,7 @@
 		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
 		line.push("上");
 		console.log(line);
-		document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+		// document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
 		rewrite();
 	};
 	document.getElementById("down").onclick = function () {
@@ -140,14 +148,14 @@
 		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
 		line.push("下");
 		console.log(line);
-		document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+		// document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
 		rewrite();
 	};
 	document.getElementById("attack").onclick = function () {
 		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
 		line.push("攻撃");
 		console.log(line);
-		document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
+		// document.getElementById("move").innerHTML = "シロクマくんのうごき：" + image[line[0]];
 		rewrite();
 	};
 
@@ -175,6 +183,9 @@
 
 	//データ残してやり直す処理
 	document.getElementById("again_data").onclick = function () {
+	for(var i=0;i<line.length;i++){//背景色戻す
+		document.getElementById(i).style.backgroundColor="rgb(165, 204, 223)";
+	}
 	document.getElementById("again_data").hidden = true;
 	document.getElementById("right").hidden = false;
 	document.getElementById("left").hidden = false;
@@ -184,7 +195,7 @@
 	document.getElementById("del").hidden = false;
 	document.getElementById("again").hidden = false;
 	document.getElementById("attack").hidden = false;
-	document.getElementById("comment").innerHTML = "<p id=comment><span class='under'>シロクマくんを１ばんすくない<ruby>数<rt>かず</rt></ruby>でゴールまでうごかそう！</span></p>";
+	document.getElementById("comment").innerHTML = "<p id=comment><span class='under'>シロクマくんを１<ruby>番<rt>ばん</rt></ruby><ruby>少<rt>すく</rt></ruby>ない<ruby>数<rt>かず</rt></ruby>でゴールまで<ruby>動<rt>うご</rt></ruby>かそう！</span></p>";
 
 	get_enemy();
 	player.x = 48;
@@ -194,9 +205,10 @@
 
 	//一つ選択消す処理
 	document.getElementById("del").onclick = function () {
+		var last=line[line.length-1];
 		line.pop();//line配列末尾削除
 		console.log(line);
-		if(count>0){
+		if(count>0　&& last!=="攻撃"){
 			count-=1;//移動回数一つ減らす
 		}
 		if(count===0){
@@ -204,21 +216,35 @@
 		}
 		document.getElementById("count").innerHTML = "シロクマくんのうごくかず：" + count;
 		
-		if (line.length > 0) {
-			document.getElementById("move").innerHTML = "シロクマくんのうごき：";
-			for (let j = 0; j < line.length; j++) {
-				var url=image[line[j]];
-				document.getElementById("move").innerHTML += url;
-			}
+		// if (line.length > 0) {
+		// 	document.getElementById("move").innerHTML = "シロクマくんのうごき：";
+		// 	for (let j = 0; j < line.length; j++) {
+		// 		var url=image[line[j]];
+		// 		document.getElementById("move").innerHTML += url;
+		// 	}
+		// }
+		if(line.length > 0){//配列末尾画像削除
+			document.getElementById(line.length).remove();
 		}
 	};
 
-	function rewrite() {
+	//<p1>再表示
+		function rewrite() {
 		if (line.length > 1) {
-			for (let j = 1; j < line.length; j++) {
-				var url=image[line[j]];
+			// for (let j = 1; j < line.length; j++) {
+				var url=image[line[line.length-1]];
+				var num=line.length-1;
+				url="<p2 id="+num+">"+url+"</p2>";//idつける
+				console.log(url);
 				document.getElementById("move").innerHTML += url;
-			}
+				console.log(document.getElementById("move"));
+			// }
+		}else{//line配列一番目
+			var url1=image[line[0]];
+			url1="<p2 id="+0+">"+url1+"</p2>";//idつける
+			document.getElementById("move").innerHTML += url1;
+			console.log(url1);
+
 		}
 	}
 
@@ -248,20 +274,18 @@
 	document.getElementById("pub").onclick = function () {
 		pub_count++;
 		document.getElementById("way").innerHTML = "<ul id='list'>"
-			+"<li class='item'>"+"<img src='img/command/left.png' width='20'>　ひだりに１マスすすむ"+"</li>"
-			+"<li class='item'>"+"<img src='img/command/right.png' width='20'>　みぎに１マスすすむ"+"</li>"
-			+"<li class='item'>"+"<img src='img/command/up.png' width='20'>　	うえに１マスすすむ"+"</li>"
-			+"<li class='item'>"+"<img src='img/command/down.png' width='20'>　したに１マスすすむ"+"</li>"
-			+"<li class='item'>"+"<img src='img/command/del.png' width='20'>　うごきをひとつけす"+"</li>"
-			+"<li class='item'>"+"<img src='img/command/restart.png' width='20'>　うごきをぜんぶけす"+"</li>"
-			+"<li class='item'>"+"<img src='img/command/bgm.png' width='20'>　おんがくをながす"+"</li>"
-			+"<li class='item'>"+"<img src='img/command/bgm_off.png' width='20'>　おんがくをとめる"+"</li>"
-			+"<li class='item'>"+"<img src='img/command/attack.png' width='20'>"+"<img src='img/command/fire1.png' width='20'>　をけせるバケツ"+"</li>"
-			+"</ul>"+"<br>"+"<br>"+"<br>"+"<br>"+"<br>"
+			+"<li class='item'>"+"<img src='img/command/left.png' width='20'><ruby>左<rt>ひだり</rt></ruby>に１マス<ruby>進<rt>すす</rt></ruby>む"+"</li>"
+			+"<li class='item'>"+"<img src='img/command/right.png' width='20'><ruby>右<rt>みぎ</rt></ruby>に１マス<ruby>進<rt>すす</rt></ruby>む"+"</li>"
+			+"<li class='item'>"+"<img src='img/command/up.png' width='20'><ruby>上<rt>うえ</rt></ruby>に１マス<ruby>進<rt>すす</rt></ruby>む"+"</li>"
+			+"<li class='item'>"+"<img src='img/command/down.png' width='20'><ruby>下<rt>した</rt></ruby>に１マス<ruby>進<rt>すす</rt></ruby>む"+"</li>"
+			+"<li class='item'>"+"<img src='img/command/del.png' width='20'><ruby>動<rt>うご</rt></ruby>きをひとつ<ruby>消<rt>け</rt></ruby>す"+"</li>"
+			+"<li class='item'>"+"<img src='img/command/restart.png' width='20'><ruby>動<rt>うご</rt></ruby>きを<ruby>全部<rt>ぜんぶ</rt></ruby><ruby>消<rt>け</rt></ruby>す"+"</li>"
+			+"<li class='item'>"+"<img src='img/command/attack.png' width='20'>"+"　<img src='img/command/fire1.png' width='20'>を<ruby>消<rt>け</rt></ruby>せるバケツ"+"</li>"
+			+"</ul>"+"<br>"+"<br>"+"<br>"+"<br>"
 			+"<br>"+"<br>"
-			+"<p>バケツは<ruby>火<rt>ひ</rt></ruby>のあるマスの<span class='under2'>1マスまえのマスでつかおう！</span></p>"
-			+"<span class='under'>シロクマくんはまとめてしかうごけないよ！</span>";
-			if(pub_count%2==0){//再度押したら非表示
+			+"<p>バケツは<ruby>火<rt>ひ</rt></ruby>のあるマスの<span class='under2'>1マスまえのマスで<ruby>使<rt>つか</rt></ruby>おう！</span></p>"
+			+"<span class='under'>シロクマくんはまとめてでしか<ruby>動<rt>うご</rt></ruby>けないよ！</span>";
+			if(pub_count%2==0){
 				document.getElementById("way").innerHTML = "";
 			}
 	};
