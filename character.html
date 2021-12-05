@@ -12,117 +12,122 @@
     <link rel="stylesheet" type="text/css" href="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-1-7/css/6-1-7.css">
 </head>
 <style>
-.slider {/*横幅94% 左右余白 中央寄せ*/
-  width:94%;
-  margin:0 auto;
-}
-
-.slider img {
-  width:30vw;
-  height:auto;
-}
-
-.slider .slick-slide {
-  transform: scale(0.5);
-  transition: all .8s;
-  opacity: 0.5;
-}
-
-.slider .slick-slide.slick-center{
-  transform: scale(1);
-  opacity: 1;
-}
-
-.slick-prev, 
-.slick-next {
-  top: 42%;
-  cursor: pointer;
-  outline: none;
-  border-top: 2px solid #666;
-  border-right: 2px solid #666;
-  height: 20px;
-  width: 20px;
-}
-
-.slick-prev {
-  left: -1.5%;
-  transform: rotate(-135deg);
-}
-
-.slick-next {
-  right: -1.5%;
-  transform: rotate(45deg);
-}
-
-.slick-dots {
-  text-align:center;
-  margin:20px 0 0 0;
-}
-
-.slick-dots li {
-  display:inline-block;
-  margin:0 5px;
-}
-
-.slick-dots button {
-  color: transparent;
-  outline: none;
-  width:8px;
-  height:8px;
-  display:block;
-  border-radius:50%;
-  background:#FFF;
-}
-
-.slick-dots .slick-active button{
-  background:#333;
-}
-
-body{
-  background:#eee;
-}
-
-h2,p {
-  text-align:center;
-  padding:20px;
-}
-
-ul{
-  margin:0;
-  padding: 0;
-  list-style: none;
-}
-
-/* a{
-  color: #333;
-}
-
-a:hover,
-a:active{
-  text-decoration: none;
-} */
-button{
-  font-family: 'Hachi Maru Pop';
-  color: #fff;
-  font-size: 13px;
-  height: 40px;
-  width: auto;
-  margin: 2px;
-  padding-left: 2%;
-  padding-right: 2%;
-  background-color: rgb(108, 160, 211);
-  border-radius: 5px;
-}
-
-.slider input[type="radio"] {
-  display: none;
-}
-
-.slider input[type="radio"]:checked + label img {
-  background: rgba(119, 160, 207, 0.5);
-  border-radius: 10px;
-}
-</style>
+  .slider {/*横幅94% 左右余白 中央寄せ*/
+   width:94%;
+   margin:0 auto;
+  }
+   
+  .slider img {
+   width:30vw;
+   height:auto;
+  }
+   
+  .slider .slick-slide {
+   transform: scale(0.5);
+   transition: all .8s;
+   opacity: 0.5;
+  }
+   
+  .slider .slick-slide.slick-center{
+   transform: scale(1);
+   opacity: 1;
+  }
+   
+  .slick-prev,
+  .slick-next {
+   top: 42%;
+   cursor: pointer;
+   outline: none;
+   border-top: 2px solid #666;
+   border-right: 2px solid #666;
+   height: 20px;
+   width: 20px;
+  }
+   
+  .slick-prev {
+   left: -1.5%;
+   transform: rotate(-135deg);
+  }
+   
+  .slick-next {
+   right: -1.5%;
+   transform: rotate(45deg);
+  }
+   
+  .slick-dots {
+   text-align:center;
+   margin:20px 0 0 0;
+  }
+   
+  .slick-dots li {
+   display:inline-block;
+   margin:0 5px;
+  }
+   
+  .slick-dots button {
+   color: transparent;
+   outline: none;
+   width:8px;
+   height:8px;
+   display:block;
+   border-radius:50%;
+   background:#FFF;
+  }
+   
+  .slick-dots .slick-active button{
+   background:#333;
+  }
+   
+  body{
+   background:#eee;
+  }
+   
+  h2,p {
+   text-align:center;
+   padding:20px;
+  }
+   
+  ul{
+   margin:0;
+   padding: 0;
+   list-style: none;
+  }
+   
+  /* a{
+   color: #333;
+  }
+   
+  a:hover,
+  a:active{
+   text-decoration: none;
+  } */
+  button{
+   font-family: 'Hachi Maru Pop';
+   color: #fff;
+   font-size: 13px;
+   height: 40px;
+   width: auto;
+   margin: 2px;
+   padding-left: 2%;
+   padding-right: 2%;
+   background-color: rgb(108, 160, 211);
+   border-radius: 5px;
+  }
+   
+  .slider input[type="radio"] {
+   display: none;
+  }
+   
+  .slider input[type="radio"]:checked + label img {
+   padding: 0.5em 1em;
+     margin: 2em 0;
+     color:rgba(119, 160, 207, 0.5);
+     background: rgba(119, 160, 207, 0.5);
+     border-top: solid 6px rgba(119, 160, 207);
+     box-shadow: 0 3px 4px rgba(0, 0, 0, 0.32);/*影*/
+   border-radius: 10px;
+  }
+  </style>
 
 
 <body>
