@@ -126,8 +126,6 @@
         document.getElementById("clearcountshortest").innerHTML = "この<ruby>調子<rt>ちょうし</rt></ruby>で<ruby>進<rt>すす</rt></ruby>もう！";
         document.getElementById("clearcount").innerHTML = "かんぺき！";
         console.log('最短移動でクリア');
-        var img = document.getElementById('audio');
-        audio.setAttribute('src', 'music/natsuyasuminotanken.mp3');
     }else{
         if (clearcount == clearcountshortest+1) {//☆☆
             console.log("1回多かったよ");
@@ -141,6 +139,8 @@
             }, 1000);
             document.getElementById("clearcountshortest").innerHTML = "あとちょっと！";
             document.getElementById("clearcount").innerHTML = "<ruby>動<rt>うご</rt></ruby><ruby>きが1 <ruby>回<rt>かい</rt></ruby><ruby>多<rt>おお</rt></ruby>かったよ！";
+            var img = document.getElementById('audio');//クリア音変更
+            audio.setAttribute('src', 'music/lvup2.mp3');
         }else if(clearcount > clearcountshortest+1){//☆
             console.log(clearcount-clearcountshortest+"回多かったよ");
             var img = document.getElementById('star1');
@@ -149,6 +149,8 @@
             }, 800);
             document.getElementById("clearcountshortest").innerHTML = "<ruby>次<rt>つぎ</rt></ruby>がんばろう！";
             document.getElementById("clearcount").innerHTML = "<ruby>動<rt>うご</rt></ruby>きが"+(clearcount-clearcountshortest)+"<ruby>回<rt>かい</rt></ruby><ruby>多<rt>おお</rt></ruby>かったよ！";
+            var img = document.getElementById('audio');//クリア音変更
+            audio.setAttribute('src', 'music/jajan.mp3');
         }
         // document.getElementById("notclearcountshortest").innerHTML = "つぎはさいたんをめざそう！";
     }
