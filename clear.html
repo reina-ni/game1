@@ -83,7 +83,7 @@
         <!-- <EMBED src="music/tousen.mp3" autostart="true" hidden="true"> -->
             <audio autoplay id="audio">
 				<source src="music/tousen.mp3">
-			  </audio>
+			</audio>
         <div class="star">
             <img src="img/other/nostar.png" id="star1" height="50">
             <img src="img/other/nostar.png" id="star2" height="50">
@@ -110,7 +110,7 @@
     clearcount-=0;//stringからnumberにするための処理
     clearcountshortest-=0;
     
-    if (clearcount == clearcountshortest) {
+    if (clearcount == clearcountshortest) {//☆☆☆
         var img = document.getElementById('star1');
         window.setTimeout(function(){
             star1.setAttribute('src', 'img/other/star.png');
@@ -126,8 +126,10 @@
         document.getElementById("clearcountshortest").innerHTML = "この<ruby>調子<rt>ちょうし</rt></ruby>で<ruby>進<rt>すす</rt></ruby>もう！";
         document.getElementById("clearcount").innerHTML = "かんぺき！";
         console.log('最短移動でクリア');
+        var img = document.getElementById('audio');
+        audio.setAttribute('src', 'music/natsuyasuminotanken.mp3');
     }else{
-        if (clearcount == clearcountshortest+1) {//1回多かった時の表示
+        if (clearcount == clearcountshortest+1) {//☆☆
             console.log("1回多かったよ");
             var img = document.getElementById('star1');
             window.setTimeout(function(){
@@ -139,7 +141,7 @@
             }, 1000);
             document.getElementById("clearcountshortest").innerHTML = "あとちょっと！";
             document.getElementById("clearcount").innerHTML = "<ruby>動<rt>うご</rt></ruby><ruby>きが1 <ruby>回<rt>かい</rt></ruby><ruby>多<rt>おお</rt></ruby>かったよ！";
-        }else if(clearcount > clearcountshortest+1){//2回以上多かった時の表示
+        }else if(clearcount > clearcountshortest+1){//☆
             console.log(clearcount-clearcountshortest+"回多かったよ");
             var img = document.getElementById('star1');
             window.setTimeout(function(){
