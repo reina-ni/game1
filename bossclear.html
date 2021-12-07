@@ -95,15 +95,39 @@
     html,body{
       height: 100%;/*描画エリアの為*/
   }
+  .flex1{
+    background-color: none;
+	position: absolute;
+    display: flex;
+    justify-content: right;
+    margin: 2%;
+	}
+  .bgmc{
+		color: rgb(83, 77, 77,0.5);
+		font-size: 10px;
+	}
 
 </style>
 
 <body>
     <div class="leaves-container"></div>
         <div id="awan" ontouchstart="">
+        <!-- ポップアップ -->
+      <div class="flex1">
+        <label class="open" for="pop-up"><img src="img/command/gamerule.png" width="20px" height="20px"></label>
+          <input type="checkbox" id="pop-up">
+            <div class="overlay">
+              <div class="window">
+                <br><br><br><br>
+                <p class="bgmc">BGM<br>
+                <label class="close" for="pop-up">×</label>
+                orchestrajingle.mp3 甘茶の音楽工房</p>
+              </div>
+            </div>
+      </div>
             <!-- <EMBED src="music/tousen.mp3" autostart="true" hidden="true"> -->
                 <audio autoplay id="audio">
-                    <source src="music/tousen.mp3">
+                    <source src="music/orchestrajingle.mp3">
                   </audio>
         <div class="float">
             <div class="flex">
@@ -119,7 +143,6 @@
             <a href="https://forms.gle/Jzx8rZAAcxZrfXWh9">アンケート</a></p> -->
             <button type="button" id="home"><img src="img/command/home.png"></button>
         </div>
-   
 <script>
     var character = window.localStorage.getItem("character");
     var character_name = window.localStorage.getItem("character_name");
@@ -181,3 +204,5 @@
 
 </body>
 </html>
+
+<!-- tousen.mp3:ポケットサウンド-https://pocket-se.info/ -->
