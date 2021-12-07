@@ -130,14 +130,38 @@
   *:focus {
 outline: none;
 }
+.flex{
+    background-color: none;
+		position: absolute;
+    display: flex;
+    justify-content: right;
+    margin: 2%;
+	}
+  .bgmc{
+		color: rgb(83, 77, 77,0.5);
+		font-size: 10px;
+	}
   </style>
 
 
 <body>
 <div ontouchstart="">
-  <audio autoplay id="audio" loop>
-    <source src="music/natsuyasuminotanken.mp3">
-  </audio>
+  <!-- ポップアップ -->
+  <div class="flex">
+    <audio autoplay id="audio" loop>
+      <source src="music/natsuyasuminotanken.mp3">
+    </audio>
+  <label class="open" for="pop-up"><img src="img/command/gamerule.png" width="20px" height="20px"></label>
+    <input type="checkbox" id="pop-up">
+      <div class="overlay">
+        <div class="window">
+          <br><br><br><br>
+          <p class="bgmc">BGM<br>
+          <label class="close" for="pop-up">×</label>
+          natsuyasuminotanken.mp3 甘茶の音楽工房</p>
+        </div>
+      </div>
+  </div>
   
   <h2>いっしょにぼうけんするシロクマくんをタッチ！</h2>
   
@@ -199,3 +223,5 @@ outline: none;
 <script src="js/character.js"></script>
 </body>
 </html>
+
+<!--natsuyasuminotanken.mp3 Atelier Amacha-->
